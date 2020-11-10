@@ -9,31 +9,31 @@ class _AddBusDetailState extends State<AddBusDetail> {
   bool _inputIsValid = true;
   String depTime, arrivalTime, travelCompany, busType, ticketPrice;
   TimeOfDay _timeOfDay= TimeOfDay.now();
-  TimeOfDay pickedDeparture;
-  TimeOfDay pickedArrival;
-  TextEditingController _timeController = TextEditingController();
+  TimeOfDay picked;
+  TextEditingController _timeControllerDeparture = TextEditingController();
+  TextEditingController _timeControllerArrival = TextEditingController();
 
   //method to pick time from the watch
   Future<Null> selectTimeDeparture(BuildContext context) async{
-    pickedDeparture = await showTimePicker(
+    picked = await showTimePicker(
         context: context,
         initialTime: _timeOfDay
     );
-    _timeController.text = pickedDeparture.format(context);
+    _timeControllerDeparture.text = picked.format(context);
     setState(() {
-      _timeOfDay = pickedDeparture;
+      _timeOfDay = picked;
     });
   }
 
   //method to pick time from the watch
   Future<Null> selectTimeArrival(BuildContext context) async{
-    pickedArrival = await showTimePicker(
+    picked = await showTimePicker(
         context: context,
         initialTime: _timeOfDay
     );
-    _timeController.text = pickedArrival.format(context);
+    _timeControllerArrival.text = picked.format(context);
     setState(() {
-      _timeOfDay = pickedArrival;
+      _timeOfDay = picked;
     });
   }
 
@@ -52,9 +52,9 @@ class _AddBusDetailState extends State<AddBusDetail> {
   }
 
   //for departure time picker
- Widget _timePickerDeparture(String textLabel){
+ Widget _timePicker(String textLabel, TextEditingController x, Function y){
     return TextField(
-      controller: _timeController,
+      controller: x,
       decoration: InputDecoration(
         labelText: textLabel,
         border: OutlineInputBorder(
@@ -62,28 +62,11 @@ class _AddBusDetailState extends State<AddBusDetail> {
         ),
       ),
       onTap: () {
-        selectTimeDeparture(context);
+        y(context);
       },
     );
  }
 
-
-  //for arrival time picker
-  Widget _timePickerArrival(String textLabel){
-    return TextField(
-      controller: _timeController,
-      decoration: InputDecoration(
-        labelText: textLabel,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onTap: () {
-        selectTimeArrival(context);
-      },
-
-    );
-  }
 
   //widget to enter text data
   Widget _textField(String textLabel){
@@ -115,10 +98,16 @@ class _AddBusDetailState extends State<AddBusDetail> {
             ListTile(
               title: Text('Enter Bus Detail Data'),
             ),
-            _timePickerDeparture('Departure Time'),
+            _timePicker(
+                'Departure Time',
+                _timeControllerDeparture,
+                selectTimeDeparture,
+            ),
             SizedBox(height: 10.0,),
-            _timePickerArrival(
+            _timePicker(
               'Arrival Time',
+              _timeControllerArrival,
+              selectTimeArrival,
             ),
             SizedBox(height: 10.0,),
             _textField('Travel Company'),

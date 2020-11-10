@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class AddBusDetail extends StatefulWidget {
@@ -13,7 +14,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
   TextEditingController _timeControllerDeparture = TextEditingController();
   TextEditingController _timeControllerArrival = TextEditingController();
 
-  //method to pick time from the watch
+  //method to pick time from the watch for departure field
   Future<Null> selectTimeDeparture(BuildContext context) async{
     picked = await showTimePicker(
         context: context,
@@ -25,7 +26,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
     });
   }
 
-  //method to pick time from the watch
+  //method to pick time from the watch for arrival field
   Future<Null> selectTimeArrival(BuildContext context) async{
     picked = await showTimePicker(
         context: context,
@@ -34,6 +35,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
     _timeControllerArrival.text = picked.format(context);
     setState(() {
       _timeOfDay = picked;
+      arrivalTime = _timeOfDay.toString();
     });
   }
 
@@ -48,10 +50,13 @@ class _AddBusDetailState extends State<AddBusDetail> {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
+      onChanged: (value) {
+        ticketPrice = value;
+      },
     );
   }
 
-  //for departure time picker
+  //for time picker
  Widget _timePicker(String textLabel, TextEditingController x, Function y){
     return TextField(
       controller: x,
@@ -118,7 +123,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
             SizedBox(height: 10.0,),
             RaisedButton(
               onPressed: () {
-                print('Data Saved');
+                print(depTime);
               },
               color: Colors.lightGreen,
               child: Text('Save'),

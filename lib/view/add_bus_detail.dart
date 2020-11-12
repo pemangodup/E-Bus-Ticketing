@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 
 class AddBusDetail extends StatefulWidget {
   @override
@@ -95,14 +95,12 @@ class _AddBusDetailState extends State<AddBusDetail> {
         title: Text(
           'Add Bus Detail'
         ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
-            ListTile(
-              title: Text('Enter Bus Detail Data'),
-            ),
             _timePicker(
                 'Departure Time',
                 _timeControllerDeparture,

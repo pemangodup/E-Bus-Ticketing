@@ -1,3 +1,4 @@
+import 'package:ebusticketing/view/sign_up.dart';
 import 'package:flutter/material.dart';
 
 
@@ -32,7 +33,11 @@ class Profile extends StatelessWidget {
               Expanded(
                 child: RaisedButton(
                   onPressed: (){
-                    print('sign up');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return SignUp();
+                    },));
                   },
                   color: Colors.white70,
                   child: Text(

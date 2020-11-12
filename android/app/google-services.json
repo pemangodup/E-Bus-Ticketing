@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "978431798550",
+    "firebase_url": "https://ebusticketing-3e89d.firebaseio.com",
+    "project_id": "ebusticketing-3e89d",
+    "storage_bucket": "ebusticketing-3e89d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978431798550:android:872b1fd393270cf6dc3437",
+        "android_client_info": {
+          "package_name": "com.example.ebusticketing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978431798550-dbgf8icu25320sadq3hm5qmpek4dvidk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoejM0YEPCdO9z3Qsa0Zt3-_fzgFe4tNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978431798550-dbgf8icu25320sadq3hm5qmpek4dvidk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

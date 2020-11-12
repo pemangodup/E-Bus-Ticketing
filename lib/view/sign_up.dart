@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SignUp extends StatefulWidget {
@@ -7,7 +8,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
+  final _auth = FirebaseAuth.instance;
   String firstName, lastName, email, password, retypePassword;
 
   @override
@@ -19,7 +20,7 @@ class _SignUpState extends State<SignUp> {
         centerTitle: true,
         backgroundColor: Colors.lightGreen,
       ),
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
           color: Colors.white,
@@ -27,10 +28,10 @@ class _SignUpState extends State<SignUp> {
           child: ListView(
             children: <Widget>[
                 TextField(
-                decoration: InputDecoration(
-                  labelText: 'First Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                  decoration: InputDecoration(
+                    labelText: 'First Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
                 onChanged: (value) {
@@ -51,6 +52,7 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 10.0,),
               TextField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(
@@ -89,8 +91,15 @@ class _SignUpState extends State<SignUp> {
               ),
               RaisedButton(
                 elevation: 10,
-                onPressed: () {
-                  print(lastName);
+                onPressed: () async{
+                  try {
+                    final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                    if(newUser != null){
+                      print("Current user is "+_auth.currentUser.email.toString());
+                    }
+                  }catch(e){
+                    print(e);
+                  }
                 },
                 color: Colors.white70,
                 child: Text(

@@ -1,4 +1,4 @@
-import 'package:ebusticketing/view/sign_up.dart';
+import 'package:ebusticketing/view/profile_login_signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
@@ -38,12 +38,14 @@ class _ProfileState extends State<Profile> {
     return Container(
       color: Colors.white,
       child: Container(
-        child: loggedInUser == null ? SignUp(): Container(
+        child: loggedInUser == null ? LoginSignup(): Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(child: Text('${loggedInUser.email}')),
               RaisedButton(
+                child: Text('Logout'),
+                color: Colors.lightGreen,
                 onPressed: () {
                   loggedOut();
                 },
@@ -55,12 +57,11 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-
-
-
+  // for logout purpose
   Future<void> loggedOut() async{
     await _auth.signOut();
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(),));
+    Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+    //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
   }
 
 

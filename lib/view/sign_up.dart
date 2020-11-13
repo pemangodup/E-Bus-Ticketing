@@ -1,4 +1,3 @@
-import 'package:ebusticketing/view/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -102,9 +101,7 @@ class _SignUpState extends State<SignUp> {
                   try {
                     final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
                     if(newUser != null){
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => Profile(),
-                      ));
+                      Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
                     }
                   }catch(e){
                     print(e);

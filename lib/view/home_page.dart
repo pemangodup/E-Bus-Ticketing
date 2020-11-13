@@ -30,7 +30,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: new AppBar(
+
         backgroundColor: Colors.lightGreen,
         title: Text(
             'eBusTicketing'

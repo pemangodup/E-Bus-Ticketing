@@ -1,8 +1,6 @@
-import 'package:ebusticketing/view/add_bus_detail.dart';
 import 'package:ebusticketing/view/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 
 
@@ -18,7 +16,6 @@ class _SignUpState extends State<SignUp> {
 
 
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) {

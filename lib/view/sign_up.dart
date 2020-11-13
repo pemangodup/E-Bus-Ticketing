@@ -1,5 +1,10 @@
+import 'package:ebusticketing/view/add_bus_detail.dart';
+import 'package:ebusticketing/view/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+
 
 
 class SignUp extends StatefulWidget {
@@ -11,8 +16,13 @@ class _SignUpState extends State<SignUp> {
   final _auth = FirebaseAuth.instance;
   String firstName, lastName, email, password, retypePassword;
 
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         elevation: 10,
@@ -95,7 +105,9 @@ class _SignUpState extends State<SignUp> {
                   try {
                     final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
                     if(newUser != null){
-                      print("Current user is "+_auth.currentUser.email.toString());
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => Profile(),
+                      ));
                     }
                   }catch(e){
                     print(e);
@@ -116,8 +128,7 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
 }
-
-
 
 

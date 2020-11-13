@@ -1,8 +1,10 @@
-import 'package:ebusticketing/view/add_bus_detail.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class Booking extends StatelessWidget {
+
+  auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,26 +13,10 @@ class Booking extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: Row(
           children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder:  (context) {
-                      return AddBusDetail();
-                    },));
-                  },
-                  elevation: 10,
-                  color: Colors.white70,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.lightGreen,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            _auth.currentUser == null ? Text('no user signed in'): Text(
+              '${_auth.currentUser.email}',
+            )
+
           ],
         ),
       ),

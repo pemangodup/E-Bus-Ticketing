@@ -56,6 +56,7 @@ Widget userNotLoggedinProfilePage(){
 
 
 //app bar widget
+// ignore: must_be_immutable
 class NavDrawer extends StatelessWidget {
   var _user = _auth.currentUser;
   @override
@@ -83,9 +84,11 @@ class NavDrawer extends StatelessWidget {
           ),
           decoration: BoxDecoration(
               color: Colors.green,
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage('assets/images/cover.jpg'))),
+//              image: DecorationImage(
+//                  fit: BoxFit.fill,
+//                  image: AssetImage('assets/images/cover.jpg'),
+//              )
+          ),
           ),
           ListTile(
             leading: Icon(Icons.input),
@@ -94,8 +97,14 @@ class NavDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.verified_user),
-            title: Text('Profile'),
-            onTap: () => {Navigator.of(context).pop()},
+            title: Text('Sign Up'),
+            onTap: () {
+              if(_auth.currentUser==null){
+                Navigator.pushNamed(context, 'signUp');
+              }else{
+                return null;
+              }
+            },
           ),
           ListTile(
             leading: Icon(Icons.add),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,11 +11,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final dbRef = FirebaseFirestore.instance;
+
   final _auth = FirebaseAuth.instance;
   String firstName, lastName, email, password, retypePassword;
 
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +102,13 @@ class _SignUpState extends State<SignUp> {
                 onPressed: () async{
                   try {
                     final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+
+                    //save in firestore
+                    dbRef.collection('user').doc('Admin').set({
+                      'email': '${_auth.currentUser.email}',
+                    });
+
+
                     if(newUser != null){
                       Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
                     }

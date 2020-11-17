@@ -1,4 +1,5 @@
 import 'package:ebusticketing/view/profile_page.dart';
+import 'package:ebusticketing/view/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:ebusticketing/view/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) => HomePage(),
         'profilePage': (context) => Profile(),
+        'signUp': (context) => SignUp(),
       },
     );
   }

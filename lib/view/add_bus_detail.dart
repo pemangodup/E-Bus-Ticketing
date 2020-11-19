@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class AddBusDetail extends StatefulWidget {
@@ -7,6 +8,9 @@ class AddBusDetail extends StatefulWidget {
 }
 
 class _AddBusDetailState extends State<AddBusDetail> {
+
+  final _dbRef = FirebaseFirestore.instance;
+
   bool _inputIsValid = true;
   String depTime, arrivalTime, travelCompany, busType, ticketPrice;
   TimeOfDay _timeOfDay= TimeOfDay.now();
@@ -56,36 +60,6 @@ class _AddBusDetailState extends State<AddBusDetail> {
     );
   }
 
-  //for time picker
- Widget _timePicker(String textLabel, TextEditingController x, Function y){
-    return TextField(
-      controller: x,
-      decoration: InputDecoration(
-        labelText: textLabel,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onTap: () {
-        y(context);
-      },
-    );
- }
-
-
-  //widget to enter text data
-  Widget _textField(String textLabel){
-    return TextField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        labelText: textLabel,
-        errorText: _inputIsValid ? null: 'Please fill the field',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-      ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,27 +75,87 @@ class _AddBusDetailState extends State<AddBusDetail> {
         padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
-            _timePicker(
-                'Departure Time',
-                _timeControllerDeparture,
-                selectTimeDeparture,
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Departure Time',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                depTime = value;
+              },
             ),
             SizedBox(height: 10.0,),
-            _timePicker(
-              'Arrival Time',
-              _timeControllerArrival,
-              selectTimeArrival,
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Arrival Time',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                arrivalTime = value;
+              },
             ),
             SizedBox(height: 10.0,),
-            _textField('Travel Company'),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Travel Company',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                travelCompany = value;
+              },
+            ),
             SizedBox(height: 10.0,),
-            _textField('Bus Type'),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Bus Type',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                busType = value;
+              },
+            ),
             SizedBox(height: 10.0,),
-            _numField('Ticket Price'),
+            TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+            labelText: 'Ticket Price',
+            errorText: _inputIsValid ? null: 'Please fill the field',
+            border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            ),
+            ),
+            onChanged: (value) {
+            ticketPrice = value;
+            },
+            ),
             SizedBox(height: 10.0,),
             RaisedButton(
               onPressed: () {
-                print(depTime);
+                if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null){
+                  _dbRef.collection('BusDetail').add({
+                    'DepartureTime': depTime,
+                    'ArrivalTime': arrivalTime,
+                    'TravelCompany': travelCompany,
+                    'BusType': busType,
+                    'TicketPrice': ticketPrice,
+                  }).then((value) => print('Bus detail Added'));
+                }
               },
               color: Colors.lightGreen,
               child: Text('Save'),

@@ -1,4 +1,4 @@
-import 'package:ebusticketing/view/ticket_timing.dart';
+import 'package:ebusticketing/view/tickets_list.dart';
 import 'package:flutter/material.dart';
 
 class SearchFrame extends StatefulWidget {

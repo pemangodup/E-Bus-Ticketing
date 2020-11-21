@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
         elevation: 10,
         title: Text('Login'),
         centerTitle: true,
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xFF07538a),
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -68,14 +68,14 @@ class _LoginPageState extends State<LoginPage> {
                     print(e);
                   }
                 },
-                color: Colors.white70,
+                color: Color(0xFF047cb0),
                 child: Text(
-                  'Sign Up',
+                  'Login',
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                textColor: Colors.lightGreen,
+                textColor: Colors.white,
               ),
             ],
           ),

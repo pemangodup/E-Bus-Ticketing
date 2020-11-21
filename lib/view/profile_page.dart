@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
       drawer: NavDrawer(),
       appBar: AppBar(
         title: Text('Profile'),
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xFF047cb0),
       ),
       body: Center(
         child: _auth.currentUser != null ? Text('${_auth.currentUser.email}'):Text('Login To View Profile'),

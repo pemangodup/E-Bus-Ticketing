@@ -13,7 +13,7 @@ class _SeatSelectionState extends State<SeatSelection> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0),
         child: AppBar(
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: Color(0xFF07538a),
           title: Center(
               child: Column(
                 children: <Widget>[
@@ -29,7 +29,7 @@ class _SeatSelectionState extends State<SeatSelection> {
       body: Center(
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.greenAccent),
+                border: Border.all(color: Color(0xFF07538a)),
               ),
               height: 500.0,
               width: 230.0,

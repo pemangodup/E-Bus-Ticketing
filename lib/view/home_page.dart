@@ -31,8 +31,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: new AppBar(
-
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xFF07538a),
         title: Text(
             'eBusTicketing'
         ),
@@ -47,8 +46,8 @@ class _HomePageState extends State<HomePage> {
       //SizedBox.expand(child: child)
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _index,
-        selectedItemColor: Colors.lightGreen,
-        unselectedItemColor: Colors.lightGreen,
+        selectedItemColor: Color(0xFF047cb0),
+        unselectedItemColor: Color(0xFF047cb0),
         onTap: (index) {
           setState(() {
             _index = index;
@@ -58,14 +57,14 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
-          color: Colors.lightGreen,
+          color: Color(0xFF047cb0),
           ),
           title: Text('Home'),
         ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.list,
-              color: Colors.lightGreen,
+              color: Color(0xFF047cb0),
             ),
             title: Text('Bookings'),
 
@@ -73,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
-              color: Colors.lightGreen,
+              color: Color(0xFF047cb0),
             ),
             title: Text('Profile'),
           ),

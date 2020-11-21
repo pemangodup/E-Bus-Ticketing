@@ -36,7 +36,7 @@ class _SearchFrameState extends State<SearchFrame> {
       children: <Widget>[
         Expanded(
           child: Container(
-            color: Colors.lightGreen,
+            color: Color(0xFF047cb0),
             height: 292.0,
             child: Container(
               decoration: BoxDecoration(
@@ -90,7 +90,7 @@ class _SearchFrameState extends State<SearchFrame> {
                           borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
                         ),
                         textColor: Colors.white,
-                        color: Colors.lightGreen,
+                        color: Color(0xFF047cb0),
                         child: Text(
                           'Search',
                         ),

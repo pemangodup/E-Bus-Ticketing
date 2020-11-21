@@ -65,7 +65,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xFF07538a),
         title: Text(
           'Add Bus Detail'
         ),
@@ -157,7 +157,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
                   }).then((value) => print('Bus detail Added'));
                 }
               },
-              color: Colors.lightGreen,
+              color: Color(0xFF047cb0),
               child: Text('Save'),
               textColor: Colors.white,
             ),

@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
         elevation: 10,
         title: Text('Sign Up'),
         centerTitle: true,
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color(0xFF07538a),
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -107,8 +107,6 @@ class _SignUpState extends State<SignUp> {
                     dbRef.collection('user').doc('Admin').set({
                       'email': '${_auth.currentUser.email}',
                     });
-
-
                     if(newUser != null){
                       Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
                     }
@@ -116,14 +114,14 @@ class _SignUpState extends State<SignUp> {
                     print(e);
                   }
                 },
-                color: Colors.white70,
+                color: Color(0xFF047cb0),
                 child: Text(
                   'Sign Up',
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                textColor: Colors.lightGreen,
+                textColor: Colors.white,
               ),
             ],
           ),

@@ -1,3 +1,4 @@
+import 'package:ebusticketing/view/list_task_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,29 +9,24 @@ class TicketTiming extends StatefulWidget {
 }
 
 class _TicketTimingState extends State<TicketTiming> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xFF07538a),
       ),
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Color(0xFF2f3480),
         body: ListPage(),
       );
   }
 }
 
-
+//list page stateful class for design
 class ListPage extends StatefulWidget {
   @override
   _ListPageState createState() => _ListPageState();
 }
-
 class _ListPageState extends State<ListPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,8 +42,10 @@ class _ListPageState extends State<ListPage> {
           }else{
             final list = querySnapshot.data.docs;
 
-            return ListView.builder(itemBuilder: (context, index){
-              return ListUI(list[index]['DepartureTime'], list[index]['ArrivalTime']);
+            return ListView.builder(
+              itemCount: list.length,
+                itemBuilder: (context, index){
+              return TicketDetailListTile(ticketPrice: list[index]['TicketPrice'], busType: list[index]['BusType'], yatayat: list[index]['TravelCompany'], arriveTime: list[index]['ArrivalTime'], depTime: list[index]['DepartureTime']);
             });
           }
         },
@@ -55,18 +53,3 @@ class _ListPageState extends State<ListPage> {
     );
   }
 }
-
-class ListUI extends StatelessWidget {
-  String depTime, arrivalTime;
-  ListUI(this.depTime, this.arrivalTime);
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(depTime),
-        Text(arrivalTime),
-      ],
-    );
-  }
-}
-

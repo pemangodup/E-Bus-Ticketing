@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 
 class TicketDetailListTile extends StatelessWidget {
-  final double depTime;
-  final double arriveTime;
+  final String depTime;
+  final String arriveTime;
   final String yatayat;
   final String busType;
-  final double ticketPrice;
+  final String ticketPrice;
 
   TicketDetailListTile({this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice});
   @override
@@ -15,7 +15,7 @@ class TicketDetailListTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(width: 1.0, color: Colors.greenAccent)
+          bottom: BorderSide(width: 1.0, color: Color(0xFF047cb0))
         ),
       ),
       child: Padding(
@@ -52,7 +52,8 @@ class TicketDetailListTile extends StatelessWidget {
                 child: Text(
                   'Book Ticket'
                 ),
-                color: Colors.green,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                color: Color(0xFF047cb0),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {

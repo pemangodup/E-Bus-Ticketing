@@ -43,9 +43,10 @@ class _ListPageState extends State<ListPage> {
             final list = querySnapshot.data.docs;
 
             return ListView.builder(
+
               itemCount: list.length,
                 itemBuilder: (context, index){
-              return TicketDetailListTile(ticketPrice: list[index]['TicketPrice'], busType: list[index]['BusType'], yatayat: list[index]['TravelCompany'], arriveTime: list[index]['ArrivalTime'], depTime: list[index]['DepartureTime']);
+              return TicketDetailListTile(ticketPrice: list[index]['TicketPrice'],from: list[index]['From'],to: list[index]['To'], busType: list[index]['BusType'], yatayat: list[index]['TravelCompany'], arriveTime: list[index]['ArrivalTime'], depTime: list[index]['DepartureTime']);
             });
           }
         },

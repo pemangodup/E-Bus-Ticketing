@@ -1,60 +1,10 @@
-import 'package:ebusticketing/view/add_bus_detail.dart';
+import 'package:ebusticketing/view/admin_view/add_bus_detail.dart';
 import 'package:ebusticketing/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
 FirebaseAuth _auth = FirebaseAuth.instance;
-//layout if user is not logged in in profile page.....
-//Widget userNotLoggedinProfilePage(){
-//  return Padding(
-//    padding: const EdgeInsets.all(8.0),
-//    child: Align(
-//      alignment: Alignment.bottomCenter,
-//      child: Row(
-//        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//        children: <Widget>[
-//          Text('${_auth.currentUser.email}'),
-//          Expanded(
-//            child: RaisedButton(
-//              onPressed: () {
-//                print('login');
-//              },
-//              color: Colors.white70,
-//              child: Text(
-//                'Login',
-//                style: TextStyle(
-//                  color: Colors.lightGreen,
-//                ),
-//              ),
-//              elevation: 10,
-//            ),
-//          ),
-//          SizedBox(width: 5.0,),
-//          Expanded(
-//            child: RaisedButton(
-//              onPressed: (){
-//                print('Sign Up');
-//              },
-//              color: Colors.white70,
-//              child: Text(
-//                'Sign Up',
-//                style: TextStyle(
-//                  color: Colors.lightGreen,
-//                ),
-//              ),
-//              elevation: 10,
-//            ),
-//          ),
-//        ],
-//      ),
-//    ),
-//  );
-//}
-//
-
-
-
 //app bar widget
 // ignore: must_be_immutable
 class NavDrawer extends StatelessWidget {
@@ -65,7 +15,6 @@ class NavDrawer extends StatelessWidget {
     await _auth.signOut();
     Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
   }
-
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
@@ -91,11 +40,6 @@ class NavDrawer extends StatelessWidget {
           ),
           ),
           ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome'),
-            onTap: () => {},
-          ),
-          ListTile(
             leading: Icon(Icons.verified_user),
             title: Text('Sign Up'),
             onTap: () {
@@ -103,19 +47,6 @@ class NavDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, 'signUp');
               }else{
                 return null;
-              }
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.add),
-            title: Text('Add Bus'),
-            onTap: () {
-              if(_auth.currentUser != null){
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => AddBusDetail(),
-                ));
-              }else{
-                print('Already logged in............');
               }
             },
           ),
@@ -132,7 +63,6 @@ class NavDrawer extends StatelessWidget {
               }
             },
           ),
-
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),

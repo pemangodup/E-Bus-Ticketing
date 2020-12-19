@@ -1,8 +1,13 @@
 import 'package:ebusticketing/view/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'admin_profile.dart';
 
 
+
+
+
+final _auth = auth.FirebaseAuth.instance;
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -40,12 +45,12 @@ class _ProfileState extends State<Profile> {
       drawer: NavDrawer(),
       appBar: AppBar(
         title: Text('Profile'),
-        backgroundColor: Color(0xFF047cb0),
+        backgroundColor: Color(0xFF047cb0)
       ),
       body: Center(
-        child: _auth.currentUser != null ? Text('${_auth.currentUser.email}'):Text('Login To View Profile'),
-      ),
-    );
+        child: loggedInUser != null ?  AdminProfile() : Text('No user logged in'),
+      )
+      );
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 
 class AddBusDetail extends StatefulWidget {
@@ -12,7 +13,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
   final _dbRef = FirebaseFirestore.instance;
 
   bool _inputIsValid = true;
-  String depTime, arrivalTime, travelCompany, busType, ticketPrice;
+  String from, to, depTime, arrivalTime, travelCompany, busType, ticketPrice;
   TimeOfDay _timeOfDay= TimeOfDay.now();
   TimeOfDay picked;
   TextEditingController _timeControllerDeparture = TextEditingController();
@@ -75,6 +76,34 @@ class _AddBusDetailState extends State<AddBusDetail> {
         padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'From',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                from = value;
+              },
+            ),
+            SizedBox(height: 10.0,),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'To',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                to = value;
+              },
+            ),
+            SizedBox(height: 10.0,),
             TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
@@ -149,6 +178,8 @@ class _AddBusDetailState extends State<AddBusDetail> {
               onPressed: () {
                 if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null){
                   _dbRef.collection('BusDetail').add({
+                    'From': from,
+                    'To': to,
                     'DepartureTime': depTime,
                     'ArrivalTime': arrivalTime,
                     'TravelCompany': travelCompany,
@@ -156,6 +187,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
                     'TicketPrice': ticketPrice,
                   }).then((value) => print('Bus detail Added'));
                 }
+                Navigator.pop(context);
               },
               color: Color(0xFF047cb0),
               child: Text('Save'),

@@ -28,7 +28,13 @@ class _SearchFrameState extends State<SearchFrame> {
       });
     }
   }
+  List sourceList = [
+    "Item 1", "Item 2", "Item 3", "Item 4",
+  ];
 
+  List destinationList = [
+    "Item 5", "Item 6", "Item 7", "Item 8",
+  ];
  
   @override
   Widget build(BuildContext context) {
@@ -49,23 +55,40 @@ class _SearchFrameState extends State<SearchFrame> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextField(
-                      onChanged: (value) {
-                        source = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter Source Point',
+                      DropdownButton(
+                        hint: Text('Enter Source Point'),
+                        isExpanded: true,
+                        value: source,
+                        onChanged: (newValue) {
+                          setState(() {
+                            source = newValue;
+                          });
+                        },
+                        items: sourceList.map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Text(e),
+                          );
+                        }).toList(),
                       ),
-                    ),
                     SizedBox(height: 20.0),
-                    TextField(
+                    DropdownButton(
+                      hint: Text('Enter Destination Point'),
+                      isExpanded: true,
+                      value: destination,
                       onChanged: (value) {
-                        destination = value;
+                        setState(() {
+                          destination = value;
+                        });
                       },
-                      decoration: InputDecoration(
-                        hintText: 'Enter Destination Point',
-                      ),
+                      items: destinationList.map((valueItem) {
+                        return DropdownMenuItem(
+                          value: valueItem,
+                          child: Text(valueItem),
+                        );
+                      }).toList(),
                     ),
+
                     SizedBox(height: 20.0),
                     Row(
                       children: <Widget>[

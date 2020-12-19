@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ebusticketing/view/search_frame.dart';
 import 'package:ebusticketing/view/booking_list.dart';
-import 'package:ebusticketing/view/profile_page.dart';
+import 'package:ebusticketing/view/profile/profile.dart';
 
 
 class HomePage extends StatefulWidget {

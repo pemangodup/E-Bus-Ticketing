@@ -1,3 +1,6 @@
+import 'package:ebusticketing/view/admin_view/add_bus_detail.dart';
+import 'package:ebusticketing/view/profile/admin_profile.dart';
+import 'package:ebusticketing/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -62,8 +65,9 @@ class _LoginPageState extends State<LoginPage> {
                   try {
                     await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
+
                     Navigator.pushNamedAndRemoveUntil(
-                        context, 'home', (route) => false);
+                          context, 'home', (route) => false);
                   }catch(e){
                     print(e);
                   }

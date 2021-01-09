@@ -46,7 +46,9 @@ class _ListPageState extends State<ListPage> {
 
               itemCount: list.length,
                 itemBuilder: (context, index){
+                print(list[index]['TicketPrice']);
               return TicketDetailListTile(ticketPrice: list[index]['TicketPrice'],from: list[index]['From'],to: list[index]['To'], busType: list[index]['BusType'], yatayat: list[index]['TravelCompany'], arriveTime: list[index]['ArrivalTime'], depTime: list[index]['DepartureTime']);
+
             });
           }
         },

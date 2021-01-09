@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebusticketing/view/tickets_list.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 
 class SearchFrame extends StatefulWidget {
   @override
@@ -28,14 +30,7 @@ class _SearchFrameState extends State<SearchFrame> {
       });
     }
   }
-  List sourceList = [
-    "Item 1", "Item 2", "Item 3", "Item 4",
-  ];
 
-  List destinationList = [
-    "Item 5", "Item 6", "Item 7", "Item 8",
-  ];
- 
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -55,38 +50,72 @@ class _SearchFrameState extends State<SearchFrame> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                      DropdownButton(
-                        hint: Text('Enter Source Point'),
-                        isExpanded: true,
-                        value: source,
-                        onChanged: (newValue) {
-                          setState(() {
-                            source = newValue;
-                          });
-                        },
-                        items: sourceList.map((e) {
-                          return DropdownMenuItem(
-                            value: e,
-                            child: Text(e),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: firestore.FirebaseFirestore.instance.collection('BusDetail').orderBy('From').snapshots(),
+                        builder: (context, snapshot){
+                          List<DropdownMenuItem> cityName =[];
+                          if(!snapshot.hasData){
+                            Text('Loading');
+                          }
+                          else{
+                            for(int i = 0; i<snapshot.data.docs.length; i++){
+                              firestore.DocumentSnapshot snap = snapshot.data.docs[i];
+                              cityName.add(DropdownMenuItem(
+                                child: Text(
+                                  snap.get('From'),
+                                  style: TextStyle(color: Color(0xff111b719)),
+                                ),
+                                value: "${snap.get('From')}",
+                              )
+                              );
+                            }
+                          }
+                          return DropdownButton(
+                            items: cityName,
+                            onChanged: (newValue) {
+                              setState(() {
+                                source = newValue;
+                              });
+                            },
+                            value: source,
+                            isExpanded: true,
+                            hint: Text('Enter Source Point'),
                           );
-                        }).toList(),
+                        },
                       ),
                     SizedBox(height: 20.0),
-                    DropdownButton(
-                      hint: Text('Enter Destination Point'),
-                      isExpanded: true,
-                      value: destination,
-                      onChanged: (value) {
-                        setState(() {
-                          destination = value;
-                        });
-                      },
-                      items: destinationList.map((valueItem) {
-                        return DropdownMenuItem(
-                          value: valueItem,
-                          child: Text(valueItem),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: firestore.FirebaseFirestore.instance.collection('BusDetail').orderBy('To').snapshots(),
+                      builder: (context, snapshot){
+                        List<DropdownMenuItem> cityName =[];
+                        if(!snapshot.hasData){
+                          Text('Loading');
+                        }
+                        else{
+                          for(int i = 0; i<snapshot.data.docs.length; i++){
+                            firestore.DocumentSnapshot snap = snapshot.data.docs[i];
+                            cityName.add(DropdownMenuItem(
+                              child: Text(
+                                snap.get('To'),
+                                style: TextStyle(color: Color(0xff111b719)),
+                              ),
+                              value: "${snap.get('To')}",
+                            )
+                            );
+                          }
+                        }
+                        return DropdownButton(
+                          items: cityName,
+                          onChanged: (newValue) {
+                            setState(() {
+                              destination = newValue;
+                            });
+                          },
+                          value: destination,
+                          isExpanded: true,
+                          hint: Text('Enter Destination Point'),
                         );
-                      }).toList(),
+                      },
                     ),
 
                     SizedBox(height: 20.0),
@@ -156,7 +185,23 @@ class _SearchFrameState extends State<SearchFrame> {
     );
   }
 }
-
-
-
-
+//DropdownButton(
+//hint: Text('Enter Source Point'),
+//isExpanded: true,
+//value: source,
+//onChanged: (newValue) {
+//setState(() {
+//source = newValue;
+//});
+//},
+//items: sourceList.map((e) {
+//return DropdownMenuItem(
+//value: e,
+//child: Text(e),
+//);
+//}).toList(),
+//)
+//
+//
+//
+//

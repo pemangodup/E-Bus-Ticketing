@@ -152,7 +152,7 @@ class _SearchFrameState extends State<SearchFrame> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return TicketTiming();
+                                    return TicketTiming(source: source, destination: destination,);
                                 },
                                 ));
                           }else{

@@ -1,6 +1,10 @@
+import 'package:ebusticketing/view/admin_view/add_bus_destination_list_tile.dart';
+import 'package:ebusticketing/view/admin_view/bus_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+
+import '../list_task_tile.dart';
 
 
 class AddBusDetail extends StatefulWidget {
@@ -11,56 +15,11 @@ class AddBusDetail extends StatefulWidget {
 class _AddBusDetailState extends State<AddBusDetail> {
 
   final _dbRef = FirebaseFirestore.instance;
-
+  final clearFrom = TextEditingController();
+  final clearTo = TextEditingController();
+  String id;
   bool _inputIsValid = true;
-  String from, to, depTime, arrivalTime, travelCompany, busType, ticketPrice;
-  TimeOfDay _timeOfDay= TimeOfDay.now();
-  TimeOfDay picked;
-  TextEditingController _timeControllerDeparture = TextEditingController();
-  TextEditingController _timeControllerArrival = TextEditingController();
-
-  //method to pick time from the watch for departure field
-  Future<Null> selectTimeDeparture(BuildContext context) async{
-    picked = await showTimePicker(
-        context: context,
-        initialTime: _timeOfDay
-    );
-    _timeControllerDeparture.text = picked.format(context);
-    setState(() {
-      _timeOfDay = picked;
-    });
-  }
-
-  //method to pick time from the watch for arrival field
-  Future<Null> selectTimeArrival(BuildContext context) async{
-    picked = await showTimePicker(
-        context: context,
-        initialTime: _timeOfDay
-    );
-    _timeControllerArrival.text = picked.format(context);
-    setState(() {
-      _timeOfDay = picked;
-      arrivalTime = _timeOfDay.toString();
-    });
-  }
-
-  // widget to enter numerical data
-  Widget _numField(String numLabel){
-    return  TextField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: numLabel,
-        errorText: _inputIsValid ? null: 'Please fill the field',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onChanged: (value) {
-        ticketPrice = value;
-      },
-    );
-  }
-
+  String from, to;
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +27,18 @@ class _AddBusDetailState extends State<AddBusDetail> {
       appBar: AppBar(
         backgroundColor: Color(0xFF07538a),
         title: Text(
-          'Add Bus Detail'
+          'Add Bus Destination'
         ),
         centerTitle: true,
       ),
-      body: Padding(
+      body:
+
+      Padding(
         padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         child: ListView(
           children: <Widget>[
             TextField(
+              controller: clearFrom,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 labelText: 'From',
@@ -91,6 +53,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
             ),
             SizedBox(height: 10.0,),
             TextField(
+              controller: clearTo,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 labelText: 'To',
@@ -103,99 +66,92 @@ class _AddBusDetailState extends State<AddBusDetail> {
                 to = value;
               },
             ),
-            SizedBox(height: 10.0,),
-            TextField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Departure Time',
-                errorText: _inputIsValid ? null: 'Please fill the field',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              onChanged: (value) {
-                depTime = value;
-              },
-            ),
-            SizedBox(height: 10.0,),
-            TextField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Arrival Time',
-                errorText: _inputIsValid ? null: 'Please fill the field',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              onChanged: (value) {
-                arrivalTime = value;
-              },
-            ),
-            SizedBox(height: 10.0,),
-            TextField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Travel Company',
-                errorText: _inputIsValid ? null: 'Please fill the field',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              onChanged: (value) {
-                travelCompany = value;
-              },
-            ),
-            SizedBox(height: 10.0,),
-            TextField(
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Bus Type',
-                errorText: _inputIsValid ? null: 'Please fill the field',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              onChanged: (value) {
-                busType = value;
-              },
-            ),
-            SizedBox(height: 10.0,),
-            TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-            labelText: 'Ticket Price',
-            errorText: _inputIsValid ? null: 'Please fill the field',
-            border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            ),
-            ),
-            onChanged: (value) {
-            ticketPrice = value;
-            },
-            ),
-            SizedBox(height: 10.0,),
             RaisedButton(
               onPressed: () {
-                if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null){
-                  _dbRef.collection('BusDetail').add({
-                    'From': from,
-                    'To': to,
-                    'DepartureTime': depTime,
-                    'ArrivalTime': arrivalTime,
-                    'TravelCompany': travelCompany,
-                    'BusType': busType,
-                    'TicketPrice': ticketPrice,
-                  }).then((value) => print('Bus detail Added'));
-                }
-                Navigator.pop(context);
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection("BusInfo").snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot ) {
+                    if(querySnapshot.hasError){
+                      return Text('Error');
+                    }
+                    if(querySnapshot.connectionState == ConnectionState.waiting){
+                      return CircularProgressIndicator();
+                    }else{
+                      final list = querySnapshot.data.docs;
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: list.length,
+                          itemBuilder: (context, index) {
+                            _dbRef.collection("BusInfo").doc().set({"From":from, "To": to});
+                            print("Lets see what will get printed **************** ${list[index]}");
+                            if(list[index].get("From")==from && list[index].get("To")==to){
+                              _dbRef.collection("BusInfo").doc().set({"From":from, "To": to});
+                              print("*****************************************************");
+                              showDialog(
+                                context: context,
+                                // ignore: missing_return
+                                builder: (context) {
+                                  Text("hello");
+                                },);
+                            }
+                            return null;
+                          }
+                      );
+                    }
+                  },
+                );
+
+
+//                CheckAlreadyExist();
+//                _dbRef.collection("BusInfo").doc().set({"From":from, "To":to});
+//                clearFrom.clear();
+//                clearTo.clear();
               },
               color: Color(0xFF047cb0),
               child: Text('Save'),
               textColor: Colors.white,
             ),
+            SizedBox(height: 10,),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection("BusInfo").snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot ) {
+                if(querySnapshot.hasError){
+                  return Text('Error');
+                }
+                if(querySnapshot.connectionState == ConnectionState.waiting){
+                  return CircularProgressIndicator();
+                }else{
+                  final list = querySnapshot.data.docs;
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        return AddBusDestinationListTile(from: list[index].get("From"), to: list[index].get("To"),);
+                      }
+                  );
+                }
+              },
+            )
           ],
         ),
       ),
     );
   }
 }
+
+
+
+class CheckAlreadyExist extends StatefulWidget {
+  final String from, to;
+  CheckAlreadyExist({this.from, this.to});
+  @override
+  _CheckAlreadyExistState createState() => _CheckAlreadyExistState();
+}
+
+class _CheckAlreadyExistState extends State<CheckAlreadyExist> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+

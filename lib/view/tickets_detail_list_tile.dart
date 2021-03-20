@@ -27,13 +27,13 @@ class _TicketTimingState extends State<TicketTiming> {
 //list page stateful class for design
 class ListPage extends StatefulWidget {
   final String source, destination;
-  final int noData = 0;
   ListPage({this.source, this.destination});
 
   @override
   _ListPageState createState() => _ListPageState();
 }
 class _ListPageState extends State<ListPage> {
+  int noData = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,18 +51,16 @@ class _ListPageState extends State<ListPage> {
             return ListView.builder(
               itemCount: list.length,
                 itemBuilder: (context, index) {
-                if(list[index]['From']== widget.source && list[index]['To']== widget.destination){
-                  return TicketDetailListTile(ticketPrice: list[index]['TicketPrice'],
-                      from: list[index]['From'],
-                      to: list[index]['To'],
-                      busType: list[index]['BusType'],
-                      yatayat: list[index]['TravelCompany'],
-                      arriveTime: list[index]['ArrivalTime'],
-                      depTime: list[index]['DepartureTime']);
-                }else{
-                  return null;
-                }
-            });
+                return TicketDetailListTile(ticketPrice: list[index]['TicketPrice'],
+                    from: list[index]['From'],
+                    to: list[index]['To'],
+                    busType: list[index]['BusType'],
+                    yatayat: list[index]['TravelCompany'],
+                    arriveTime: list[index]['ArrivalTime'],
+                    depTime: list[index]['DepartureTime']);
+
+            }
+            );
           }
         },
       ),

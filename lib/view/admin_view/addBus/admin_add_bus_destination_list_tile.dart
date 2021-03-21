@@ -1,10 +1,11 @@
+import 'package:ebusticketing/view/admin_view/addBus/admin_add_bus_detail.dart';
 import 'package:flutter/material.dart';
 
 
 
 class AddBusDestinationListTile extends StatelessWidget {
-  final String from, to;
-  AddBusDestinationListTile({this.from, this.to});
+  final String from, to, docId;
+  AddBusDestinationListTile({this.from, this.to, this.docId});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,6 +29,15 @@ class AddBusDestinationListTile extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
+                RaisedButton(
+                  color: Colors.lightGreen,
+                  textColor: Colors.white,
+                  child: Text('Add'),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>BusDetail(from: from, to: to, docId: docId,)));
+                  }
+                )
 
 
               ],

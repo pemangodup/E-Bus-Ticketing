@@ -11,13 +11,18 @@ class AdminBusListTile extends StatelessWidget {
   final String yatayat;
   final String busType;
   final String ticketPrice;
-  final String documentId;
+  final String beginningDocumentId;
+  final String secondDocumentId;
 
-  AdminBusListTile({this.from, this.to, this.documentId, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice});
+  AdminBusListTile({this.from, this.to, this.beginningDocumentId, this.depTime,
+    this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.secondDocumentId});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
+        type: MaterialType.transparency,
+        child: new Container(
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border(
             bottom: BorderSide(width: 1.0, color: Color(0xFF047cb0))
         ),
@@ -34,7 +39,7 @@ class AdminBusListTile extends StatelessWidget {
                   '$from - $to',
                   style: TextStyle(
                     color: Colors.red,
-                    fontSize: 14.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -51,6 +56,7 @@ class AdminBusListTile extends StatelessWidget {
                 Text(
                   '$yatayat',
                   style: TextStyle(
+                    fontSize: 18.0,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -58,6 +64,7 @@ class AdminBusListTile extends StatelessWidget {
                 Text(
                   '$busType',
                   style: TextStyle(
+                    fontSize: 18.0,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -70,7 +77,8 @@ class AdminBusListTile extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return UpdateBusDetail(documentId, depTime, arriveTime, yatayat, busType, ticketPrice);
+                        return UpdateBusDetail(travelCompany: yatayat, ticketPrice: ticketPrice, to: to, from: from,
+                          busType: busType, arrivalTime: arriveTime, depTime: depTime, documentId: beginningDocumentId, secondDocumentId: secondDocumentId);
                       },
                     ));
                   },
@@ -94,6 +102,6 @@ class AdminBusListTile extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

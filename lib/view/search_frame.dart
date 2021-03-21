@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ebusticketing/view/tickets_detail_list_tile.dart';
+import 'package:ebusticketing/view/ticket_timing.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 
@@ -51,7 +51,7 @@ class _SearchFrameState extends State<SearchFrame> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                       StreamBuilder<QuerySnapshot>(
-                        stream: firestore.FirebaseFirestore.instance.collection('BusDetail').orderBy('From').snapshots(),
+                        stream: firestore.FirebaseFirestore.instance.collection('BusInfo').orderBy('From').snapshots(),
                         builder: (context, snapshot){
                           List<DropdownMenuItem> cityName =[];
                           if(!snapshot.hasData){
@@ -85,7 +85,7 @@ class _SearchFrameState extends State<SearchFrame> {
                       ),
                     SizedBox(height: 20.0),
                     StreamBuilder<QuerySnapshot>(
-                      stream: firestore.FirebaseFirestore.instance.collection('BusDetail').orderBy('To').snapshots(),
+                      stream: firestore.FirebaseFirestore.instance.collection('BusInfo').orderBy('To').snapshots(),
                       builder: (context, snapshot){
                         List<DropdownMenuItem> cityName =[];
                         if(!snapshot.hasData){

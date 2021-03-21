@@ -1,21 +1,19 @@
-import 'package:ebusticketing/view/profile/profile.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class BusDetail extends StatefulWidget {
-  BusDetail({this.to, this.from, this.docId});
-  final String to , docId;
-  final String from;
+
+// ignore: must_be_immutable
+class UpdateBusDetail extends StatefulWidget {
+  String documentId, from, to, depTime, arrivalTime, travelCompany, busType, ticketPrice, secondDocumentId;
+  UpdateBusDetail( {this.from, this.to, this.documentId, this.depTime, this.arrivalTime, this.travelCompany, this.busType, this.ticketPrice, this.secondDocumentId});
   @override
-  _BusDetailState createState() => _BusDetailState();
+  _UpdateBusDetailState createState() => _UpdateBusDetailState();
 }
 
-class _BusDetailState extends State<BusDetail> {
-  String from, to;
-  final _dbRef = FirebaseFirestore.instance;
+class _UpdateBusDetailState extends State<UpdateBusDetail> {
 
+  FirebaseFirestore fb = FirebaseFirestore.instance;
   bool _inputIsValid = true;
-  String depTime, arrivalTime, travelCompany, busType, ticketPrice;
   TimeOfDay _timeOfDay= TimeOfDay.now();
   TimeOfDay picked;
   TextEditingController _timeControllerDeparture = TextEditingController();
@@ -42,26 +40,26 @@ class _BusDetailState extends State<BusDetail> {
     _timeControllerArrival.text = picked.format(context);
     setState(() {
       _timeOfDay = picked;
-      arrivalTime = _timeOfDay.toString();
+      widget.arrivalTime = _timeOfDay.toString();
     });
   }
 
   // widget to enter numerical data
-  Widget _numField(String numLabel){
-    return  TextField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: numLabel,
-        errorText: _inputIsValid ? null: 'Please fill the field',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onChanged: (value) {
-        ticketPrice = value;
-      },
-    );
-  }
+//  Widget _numField(String numLabel){
+//    return  TextField(
+//      keyboardType: TextInputType.number,
+//      decoration: InputDecoration(
+//        labelText: numLabel,
+//        errorText: _inputIsValid ? null: 'Please fill the field',
+//        border: OutlineInputBorder(
+//          borderRadius: BorderRadius.circular(10.0),
+//        ),
+//      ),
+//      onChanged: (value) {
+//        widget.ticketPrice = value;
+//      },
+//    );
+//  }
 
 
   @override
@@ -70,7 +68,7 @@ class _BusDetailState extends State<BusDetail> {
       appBar: AppBar(
         backgroundColor: Color(0xFF07538a),
         title: Text(
-            'Add Bus Detail'
+            'Update Bus Detail'
         ),
         centerTitle: true,
       ),
@@ -81,124 +79,141 @@ class _BusDetailState extends State<BusDetail> {
             TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: 'Departure Time',
+                labelText: widget.from,
                 errorText: _inputIsValid ? null: 'Please fill the field',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               onChanged: (value) {
-                depTime = value;
+                widget.from = value;
               },
             ),
             SizedBox(height: 10.0,),
             TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: 'Arrival Time',
+                labelText: widget.to,
                 errorText: _inputIsValid ? null: 'Please fill the field',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               onChanged: (value) {
-                arrivalTime = value;
+                widget.to = value;
               },
             ),
             SizedBox(height: 10.0,),
             TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: 'Travel Company',
+                labelText: '${widget.depTime}',
                 errorText: _inputIsValid ? null: 'Please fill the field',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               onChanged: (value) {
-                travelCompany = value;
+                widget.depTime = value;
               },
             ),
             SizedBox(height: 10.0,),
             TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: 'Bus Type',
+                labelText: '${widget.arrivalTime}',
                 errorText: _inputIsValid ? null: 'Please fill the field',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               onChanged: (value) {
-                busType = value;
+                  widget.arrivalTime = value;
+                  print("%%%%%%%%%%%%% Arrival Time%${widget.arrivalTime}");
+              },
+            ),
+            SizedBox(height: 10.0,),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: '${widget.travelCompany}',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                widget.travelCompany = value;
+              },
+            ),
+            SizedBox(height: 10.0,),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: '${widget.busType}',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                widget.busType = value;
               },
             ),
             SizedBox(height: 10.0,),
             TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Ticket Price',
+                labelText: '${widget.ticketPrice}',
                 errorText: _inputIsValid ? null: 'Please fill the field',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               onChanged: (value) {
-                ticketPrice = value;
+                widget.ticketPrice = value;
               },
             ),
             SizedBox(height: 10.0,),
             RaisedButton(
               onPressed: () {
-                if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null){
-                      _dbRef.collection('BusDetail').doc(widget.docId).collection('Details').doc().setData({
-                          'DepartureTime': depTime,
-                          'ArrivalTime': arrivalTime,
-                          'TravelCompany': travelCompany,
-                          'BusType': busType,
-                          'TicketPrice': ticketPrice,
-                  }).then((value) => print('******************** Added *********************'));
-                  Navigator.pop(context);
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('The id is ${widget.docId}'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                }else{
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('Field Empty...'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                }
+                updateData();
               },
               color: Color(0xFF047cb0),
-              child: Text('Save'),
+              child: Text('Update'),
               textColor: Colors.white,
             ),
+            RaisedButton(
+              child: Text('Delete'),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                deleteData();
+              },
+            )
           ],
         ),
       ),
     );
+  }
+
+  void updateData() {
+    print("Let me print the id:  ***************${widget.documentId} and ${widget.secondDocumentId}");
+    fb.collection('BusInfo').doc(widget.documentId).collection("Details").doc(widget.secondDocumentId).update({
+      "ArrivalTime": "${widget.arrivalTime}",
+      "BusType":"${widget.busType}",
+      "DepartureTime": "${widget.depTime}",
+      "TicketPrice": "${widget.ticketPrice}",
+      "TravelCompany": "${widget.travelCompany}",
+    }).catchError((e){
+      print("error error error $e");
+    });
+    print("Let me print you ***************${widget.arrivalTime}");
+    Navigator.pop(context);
+  }
+
+  void deleteData() {
+    fb.collection("BusInfo").doc(widget.documentId).collection("Details").doc(widget.secondDocumentId).delete();
+    Navigator.pop(context);
   }
 }

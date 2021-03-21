@@ -1,4 +1,4 @@
-import 'package:ebusticketing/view/list_task_tile.dart';
+import 'package:ebusticketing/view/ticket_detail_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -39,7 +39,7 @@ class _ListPageState extends State<ListPage> {
     return Container(
       color: Colors.white,
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("BusDetail").snapshots(),
+        stream: FirebaseFirestore.instance.collection("BusInfo").snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot ) {
           if(querySnapshot.hasError){
             return Text('Error');

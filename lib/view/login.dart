@@ -1,4 +1,4 @@
-import 'package:ebusticketing/view/admin_view/add_bus_detail.dart';
+import 'package:ebusticketing/view/admin_view/addBus/admin_add_origin_destination.dart';
 import 'package:ebusticketing/view/profile/admin_profile.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 import 'package:flutter/material.dart';

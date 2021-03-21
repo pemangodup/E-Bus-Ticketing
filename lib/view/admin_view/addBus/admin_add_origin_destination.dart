@@ -1,10 +1,10 @@
-import 'package:ebusticketing/view/admin_view/add_bus_destination_list_tile.dart';
-import 'package:ebusticketing/view/admin_view/bus_detail.dart';
+import 'package:ebusticketing/view/admin_view/addBus/admin_add_bus_destination_list_tile.dart';
+import 'package:ebusticketing/view/admin_view/addBus/admin_add_bus_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-import '../list_task_tile.dart';
+import '../../ticket_detail_list_tile.dart';
 
 
 class AddBusDetail extends StatefulWidget {
@@ -68,44 +68,40 @@ class _AddBusDetailState extends State<AddBusDetail> {
             ),
             RaisedButton(
               onPressed: () {
-                StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection("BusInfo").snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot ) {
-                    if(querySnapshot.hasError){
-                      return Text('Error');
-                    }
-                    if(querySnapshot.connectionState == ConnectionState.waiting){
-                      return CircularProgressIndicator();
-                    }else{
-                      final list = querySnapshot.data.docs;
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: list.length,
-                          itemBuilder: (context, index) {
-                            _dbRef.collection("BusInfo").doc().set({"From":from, "To": to});
-                            print("Lets see what will get printed **************** ${list[index]}");
-                            if(list[index].get("From")==from && list[index].get("To")==to){
-                              _dbRef.collection("BusInfo").doc().set({"From":from, "To": to});
-                              print("*****************************************************");
-                              showDialog(
-                                context: context,
-                                // ignore: missing_return
-                                builder: (context) {
-                                  Text("hello");
-                                },);
-                            }
-                            return null;
-                          }
-                      );
-                    }
-                  },
-                );
+                if(from != null && to != null){
+                  _dbRef.collection("BusInfo").doc().set({"From":from, "To":to});
+                  AlertDialog(
+                    title: Text('Notification!'),
+                    content: Text('Added To Database'),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('Ok'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                  clearFrom.clear();
+                  clearTo.clear();
+                }else{
+                  showDialog(context: context,
+                      builder: (BuildContext context){
+                        return AlertDialog(
+                          title: Text('Alert!'),
+                          content: Text('Field Empty...'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                }
 
-
-//                CheckAlreadyExist();
-//                _dbRef.collection("BusInfo").doc().set({"From":from, "To":to});
-//                clearFrom.clear();
-//                clearTo.clear();
               },
               color: Color(0xFF047cb0),
               child: Text('Save'),
@@ -126,7 +122,7 @@ class _AddBusDetailState extends State<AddBusDetail> {
                       shrinkWrap: true,
                       itemCount: list.length,
                       itemBuilder: (context, index) {
-                        return AddBusDestinationListTile(from: list[index].get("From"), to: list[index].get("To"),);
+                        return AddBusDestinationListTile(from: list[index].get("From"), to: list[index].get("To"), docId: list[index].id,);
                       }
                   );
                 }
@@ -138,20 +134,3 @@ class _AddBusDetailState extends State<AddBusDetail> {
     );
   }
 }
-
-
-
-class CheckAlreadyExist extends StatefulWidget {
-  final String from, to;
-  CheckAlreadyExist({this.from, this.to});
-  @override
-  _CheckAlreadyExistState createState() => _CheckAlreadyExistState();
-}
-
-class _CheckAlreadyExistState extends State<CheckAlreadyExist> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-

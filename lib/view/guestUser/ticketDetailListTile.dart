@@ -1,17 +1,18 @@
-import 'package:ebusticketing/view/seat_selection.dart';
+import 'package:ebusticketing/view/seatSelection.dart';
 import 'package:flutter/material.dart';
 
 
 class TicketDetailListTile extends StatefulWidget {
-  final String from;
-  final String to;
+//  final String from;
+//  final String to;
+  final String date;
   final String depTime;
   final String arriveTime;
   final String yatayat;
   final String busType;
   final String ticketPrice;
 
-  TicketDetailListTile({this.from, this.to, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice});
+  TicketDetailListTile({this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice});
 
   @override
   _TicketDetailListTileState createState() => _TicketDetailListTileState();
@@ -43,8 +44,15 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+//                  Text(
+//                    '${widget.from} - ${widget.to}',
+//                    style: TextStyle(
+//                      fontSize: 14.0,
+//                      fontWeight: FontWeight.bold,
+//                    ),
+//                  ),
                   Text(
-                    '${widget.from} - ${widget.to}',
+                    '${widget.date}',
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,

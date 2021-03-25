@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'admin_update_bus_detail.dart';
+import 'adminUpdateBusDetail.dart';
 
 
 class AdminBusListTile extends StatelessWidget {

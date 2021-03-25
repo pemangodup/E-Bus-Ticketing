@@ -1,17 +1,22 @@
-import 'package:ebusticketing/view/admin_view/addBus/admin_add_bus_detail.dart';
 import 'package:flutter/material.dart';
+import 'adminListAll.dart';
 
 
 
-class AddBusDestinationListTile extends StatelessWidget {
+class BusListTile extends StatefulWidget {
   final String from, to, docId;
-  AddBusDestinationListTile({this.from, this.to, this.docId});
+  BusListTile({this.from, this.to, this.docId});
+  @override
+  _BusListTileState createState() => _BusListTileState();
+}
+
+class _BusListTileState extends State<BusListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
-            bottom: BorderSide(width: 1.0, color: Color(0xFF047cb0))
+            bottom: BorderSide(width: 1.0, color: Color(0xFF047cb0)),
         ),
       ),
       child: Padding(
@@ -23,7 +28,7 @@ class AddBusDestinationListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '$from - $to',
+                  '${widget.from} - ${widget.to}',
                   style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
@@ -31,12 +36,12 @@ class AddBusDestinationListTile extends StatelessWidget {
                 ),
 
                 RaisedButton(
-                  color: Colors.lightGreen,
-                  textColor: Colors.white,
-                  child: Text('Add'),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>BusDetail(from: from, to: to, docId: docId,)));
-                  }
+                    color: Colors.lightGreen,
+                    textColor: Colors.white,
+                    child: Text('List'),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>ListAll(docId: widget.docId, from: widget.from, to: widget.to,)));
+                    }
                 )
 
 
@@ -49,3 +54,4 @@ class AddBusDestinationListTile extends StatelessWidget {
     );
   }
 }
+

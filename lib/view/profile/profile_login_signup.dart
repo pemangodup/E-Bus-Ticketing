@@ -1,5 +1,5 @@
 import 'package:ebusticketing/view/login.dart';
-import 'package:ebusticketing/view/sign_up.dart';
+import 'package:ebusticketing/view/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

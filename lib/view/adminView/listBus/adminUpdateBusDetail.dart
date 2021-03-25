@@ -129,7 +129,6 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
               ),
               onChanged: (value) {
                   widget.arrivalTime = value;
-                  print("%%%%%%%%%%%%% Arrival Time%${widget.arrivalTime}");
               },
             ),
             SizedBox(height: 10.0,),
@@ -198,7 +197,6 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
   }
 
   void updateData() {
-    print("Let me print the id:  ***************${widget.documentId} and ${widget.secondDocumentId}");
     fb.collection('BusInfo').doc(widget.documentId).collection("Details").doc(widget.secondDocumentId).update({
       "ArrivalTime": "${widget.arrivalTime}",
       "BusType":"${widget.busType}",
@@ -206,14 +204,15 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
       "TicketPrice": "${widget.ticketPrice}",
       "TravelCompany": "${widget.travelCompany}",
     }).catchError((e){
-      print("error error error $e");
+      print("error $e");
     });
-    print("Let me print you ***************${widget.arrivalTime}");
     Navigator.pop(context);
   }
 
   void deleteData() {
-    fb.collection("BusInfo").doc(widget.documentId).collection("Details").doc(widget.secondDocumentId).delete();
+    fb.collection("BusInfo").doc(widget.documentId).collection("Details").doc(widget.secondDocumentId).delete().catchError((e){
+      print(e);
+    });
     Navigator.pop(context);
   }
 }

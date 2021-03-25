@@ -1,8 +1,9 @@
-import 'package:ebusticketing/view/admin_view/listBus/bus_list_tile.dart';
 import 'package:flutter/material.dart';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'busListTile.dart';
 
 
 //Listing the list of origin and destination in order to update de

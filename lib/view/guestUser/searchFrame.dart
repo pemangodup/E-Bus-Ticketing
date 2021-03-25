@@ -1,7 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ebusticketing/view/ticket_timing.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:ebusticketing/view/guestUser/locationSearch.dart';
+import 'package:ebusticketing/view/guestUser/ticketTiming.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+
+
 
 class SearchFrame extends StatefulWidget {
   @override
@@ -10,9 +12,14 @@ class SearchFrame extends StatefulWidget {
 
 class _SearchFrameState extends State<SearchFrame> {
 
+
+
+  //initializing search bar controller
+  final TextEditingController searchOriginController = TextEditingController();
+  final TextEditingController searchDestinationController = TextEditingController();
+
   //variable to store source and destination point
-  String source;
-  String destination;
+  String source, destination, date;
 
   //for date picker pop up
   DateTime _date = DateTime.now();
@@ -50,71 +57,37 @@ class _SearchFrameState extends State<SearchFrame> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                      StreamBuilder<QuerySnapshot>(
-                        stream: firestore.FirebaseFirestore.instance.collection('BusInfo').orderBy('From').snapshots(),
-                        builder: (context, snapshot){
-                          List<DropdownMenuItem> cityName =[];
-                          if(!snapshot.hasData){
-                            Text('Loading');
-                          }
-                          else{
-                            for(int i = 0; i<snapshot.data.docs.length; i++){
-                              firestore.DocumentSnapshot snap = snapshot.data.docs[i];
-                              cityName.add(DropdownMenuItem(
-                                child: Text(
-                                  snap.get('From'),
-                                  style: TextStyle(color: Color(0xff111b719)),
-                                ),
-                                value: "${snap.get('From')}",
-                              )
-                              );
-                            }
-                          }
-                          return DropdownButton(
-                            items: cityName,
-                            onChanged: (newValue) {
-                              setState(() {
-                                source = newValue;
-                              });
-                            },
-                            value: source,
-                            isExpanded: true,
-                            hint: Text('Enter Source Point'),
-                          );
-                        },
+                    TextField(
+                      controller: searchOriginController,
+                      decoration: InputDecoration(
+                        hintText: "Insert Origin"
                       ),
-                    SizedBox(height: 20.0),
-                    StreamBuilder<QuerySnapshot>(
-                      stream: firestore.FirebaseFirestore.instance.collection('BusInfo').orderBy('To').snapshots(),
-                      builder: (context, snapshot){
-                        List<DropdownMenuItem> cityName =[];
-                        if(!snapshot.hasData){
-                          Text('Loading');
-                        }
-                        else{
-                          for(int i = 0; i<snapshot.data.docs.length; i++){
-                            firestore.DocumentSnapshot snap = snapshot.data.docs[i];
-                            cityName.add(DropdownMenuItem(
-                              child: Text(
-                                snap.get('To'),
-                                style: TextStyle(color: Color(0xff111b719)),
-                              ),
-                              value: "${snap.get('To')}",
-                            )
-                            );
-                          }
-                        }
-                        return DropdownButton(
-                          items: cityName,
-                          onChanged: (newValue) {
-                            setState(() {
-                              destination = newValue;
-                            });
-                          },
-                          value: destination,
-                          isExpanded: true,
-                          hint: Text('Enter Destination Point'),
-                        );
+                      onTap: () async{
+                        String val = await Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return LocationSearch(location: "From",);
+                        }));
+                        setState(() {
+                          searchOriginController.text = val;
+                          source = val;
+                        });
+                      },
+                    ),
+
+                      SizedBox(height: 20,),
+
+                    TextField(
+                      decoration: new InputDecoration(
+                        hintText: "Insert Destination",
+                      ),
+                      controller: searchDestinationController,
+                      onTap: () async{
+                       String val = await Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return LocationSearch(location: "To",);
+                        }));
+                       setState(() {
+                         searchDestinationController.text = val;
+                         destination = val;
+                       });
                       },
                     ),
 
@@ -131,10 +104,11 @@ class _SearchFrameState extends State<SearchFrame> {
                           width: 10.0,
                         ),
                         Text(
-                          '${_date.year.toString()}:${_date.month.toString()}:${_date.day.toString()}'
+                          date = '${_date.year.toString()}:${_date.month.toString()}:${_date.day.toString()}'
                         ),
                       ],
                     ),
+                    SizedBox(height: 20,),
                     SizedBox(
                       width: double.infinity,
                       child: RaisedButton(
@@ -152,7 +126,7 @@ class _SearchFrameState extends State<SearchFrame> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return TicketTiming(source: source, destination: destination,);
+                                    return TicketTiming(source: source, destination: destination, date: date);
                                 },
                                 ));
                           }else{
@@ -160,7 +134,7 @@ class _SearchFrameState extends State<SearchFrame> {
                             builder: (BuildContext context){
                               return AlertDialog(
                                 title: Text('Alert!'),
-                                content: Text('Field Empty...'),
+                                content: Text('Field Empty'),
                                 actions: <Widget>[
                                   FlatButton(
                                     child: Text('Ok'),
@@ -185,3 +159,5 @@ class _SearchFrameState extends State<SearchFrame> {
     );
   }
 }
+
+

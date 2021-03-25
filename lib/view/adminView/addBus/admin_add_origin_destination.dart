@@ -1,10 +1,8 @@
-import 'package:ebusticketing/view/admin_view/addBus/admin_add_bus_destination_list_tile.dart';
-import 'package:ebusticketing/view/admin_view/addBus/admin_add_bus_detail.dart';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-import '../../ticket_detail_list_tile.dart';
+import 'admin_add_bus_destination_list_tile.dart';
 
 
 class AddBusDetail extends StatefulWidget {

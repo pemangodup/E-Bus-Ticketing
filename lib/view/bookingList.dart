@@ -16,13 +16,15 @@ class _BookingState extends State<Booking> {
       color: Colors.white,
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Row(
-          children: <Widget>[
-            _auth.currentUser == null ? Text('no user signed in'): Text(
-              '${_auth.currentUser.email}',
-            )
+        child: Center(
+          child: Row(
+            children: <Widget>[
+              _auth.currentUser == null ? Text('no user signed in'): Text(
+                '${_auth.currentUser.email}',
+              )
 
-          ],
+            ],
+          ),
         ),
       ),
     );

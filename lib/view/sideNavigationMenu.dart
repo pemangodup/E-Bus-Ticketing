@@ -1,6 +1,7 @@
-import 'package:ebusticketing/view/admin_view/addBus/admin_add_origin_destination.dart';
-import 'package:ebusticketing/view/login.dart';
+import 'package:ebusticketing/view/guestUser/searchFrame.dart';
+import 'package:ebusticketing/view/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:ebusticketing/view/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
@@ -59,10 +60,30 @@ class NavDrawer extends StatelessWidget {
                   builder: (context) => LoginPage(),
                 ));
               }else{
-                print('Already logged in............');
+               AlertDialog(
+                 title: Text("Alert"),
+               content: Text("User Already Logged In"),
+                 actions: <Widget>[
+                   FlatButton(
+                     child: Text("OK"),
+                     onPressed: (){
+                       Navigator.pop(context);
+                     },
+                   ),
+                 ],
+               );
               }
             },
           ),
+        ListTile(
+          leading: Icon(Icons.exit_to_app),
+          title: Text('Home'),
+          onTap: () {
+            return Navigator.push(context, MaterialPageRoute(builder: (context){
+              return HomePage();
+            }));
+          },
+        ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),

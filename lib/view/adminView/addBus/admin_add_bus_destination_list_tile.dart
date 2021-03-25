@@ -1,17 +1,12 @@
-import 'package:ebusticketing/view/admin_view/listBus/admin_listAll.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'admin_add_bus_detail.dart';
 
 
 
-class BusListTile extends StatefulWidget {
+class AddBusDestinationListTile extends StatelessWidget {
   final String from, to, docId;
-  BusListTile({this.from, this.to, this.docId});
-  @override
-  _BusListTileState createState() => _BusListTileState();
-}
-
-class _BusListTileState extends State<BusListTile> {
+  AddBusDestinationListTile({this.from, this.to, this.docId});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +24,7 @@ class _BusListTileState extends State<BusListTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${widget.from} - ${widget.to}',
+                  '$from - $to',
                   style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
@@ -37,12 +32,12 @@ class _BusListTileState extends State<BusListTile> {
                 ),
 
                 RaisedButton(
-                    color: Colors.lightGreen,
-                    textColor: Colors.white,
-                    child: Text('List'),
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>ListAll(docId: widget.docId, from: widget.from, to: widget.to,)));
-                    }
+                  color: Colors.lightGreen,
+                  textColor: Colors.white,
+                  child: Text('Add'),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>BusDetail(from: from, to: to, docId: docId,)));
+                  }
                 )
 
 
@@ -55,4 +50,3 @@ class _BusListTileState extends State<BusListTile> {
     );
   }
 }
-

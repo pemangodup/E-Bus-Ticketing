@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ebusticketing/view/search_frame.dart';
-import 'package:ebusticketing/view/booking_list.dart';
+import 'package:ebusticketing/view/guestUser/searchFrame.dart';
+import 'package:ebusticketing/view/bookingList.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 
 

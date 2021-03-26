@@ -1,4 +1,4 @@
-import 'package:ebusticketing/view/profile/admin_profile.dart';
+import 'package:ebusticketing/view/adminView/adminProfile.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';

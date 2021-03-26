@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 
 class TicketDetailListTile extends StatefulWidget {
-//  final String from;
-//  final String to;
+  final String from;
+  final String to;
   final String date;
   final String depTime;
   final String arriveTime;
@@ -12,7 +12,7 @@ class TicketDetailListTile extends StatefulWidget {
   final String busType;
   final String ticketPrice;
 
-  TicketDetailListTile({this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice});
+  TicketDetailListTile({this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.to, this.from});
 
   @override
   _TicketDetailListTileState createState() => _TicketDetailListTileState();
@@ -26,7 +26,15 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return SeatSelection();
+            return SeatSelection(
+              to: widget.to,
+              from: widget.from,
+              date: widget.date,
+              travelCompany: widget.yatayat,
+              price: widget.ticketPrice,
+              time: widget.depTime,
+              busType: widget.busType,
+            );
           },
         ));
       },
@@ -44,28 +52,14 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-//                  Text(
-//                    '${widget.from} - ${widget.to}',
-//                    style: TextStyle(
-//                      fontSize: 14.0,
-//                      fontWeight: FontWeight.bold,
-//                    ),
-//                  ),
                   Text(
-                    '${widget.date}',
+                    'Departure Time: ${widget.depTime}',
                     style: TextStyle(
-                      fontSize: 14.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10.0,),
-                Text(
-                  '${widget.depTime} - ${widget.arriveTime}',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+
                 SizedBox(height: 10.0,),
                 Text(
                   '${widget.yatayat}',

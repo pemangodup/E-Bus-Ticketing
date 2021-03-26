@@ -1,4 +1,3 @@
-import 'package:ebusticketing/view/adminView/listBus/busListTile.dart';
 import 'package:ebusticketing/view/guestUser/ticketDetailListTile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,8 +16,20 @@ class _TicketTimingState extends State<TicketTiming> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF07538a),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          title: Column(
+            children: <Widget>[
+              SizedBox(height: 20.0,),
+              Text("${widget.source} - ${widget.destination}"),
+              SizedBox(height: 1.0,),
+              Text("${widget.date}"),
+              SizedBox(height: 10.0,),
+            ],
+          ),
+          backgroundColor: Color(0xFF07538a),
+        ),
       ),
       backgroundColor: Color(0xFF2f3480),
         body: ListPage(source: widget.source, destination: widget.destination, date: widget.date,),
@@ -71,6 +82,8 @@ class _ListPageState extends State<ListPage> {
                                 itemCount: listOne.length,
                                   itemBuilder: (context, indexTwo){
                                     return TicketDetailListTile(
+                                      from: widget.source,
+                                      to: widget.destination,
                                       date: widget.date,
                                       depTime: listOne[indexTwo].get("DepartureTime"),
                                       arriveTime: listOne[indexTwo].get("ArrivalTime"),

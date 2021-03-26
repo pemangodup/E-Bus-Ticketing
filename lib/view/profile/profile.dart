@@ -1,13 +1,9 @@
 import 'package:ebusticketing/view/sideNavigationMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'admin_profile.dart';
+import '../adminView/adminProfile.dart';
 
 
-
-
-
-final _auth = auth.FirebaseAuth.instance;
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();

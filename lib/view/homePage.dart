@@ -3,6 +3,9 @@ import 'package:ebusticketing/view/guestUser/searchFrame.dart';
 import 'package:ebusticketing/view/bookingList.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 
+import 'adminView/adminPanel.dart';
+
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,9 +39,16 @@ class _HomePageState extends State<HomePage> {
             'eBusTicketing'
         ),
         actions: <Widget>[
-          Icon(
-            Icons.business,
-            color: Colors.white,
+          GestureDetector(
+            child: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            onLongPress: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return AdminPanel();
+              }));
+            },
           ),
         ],
       ),

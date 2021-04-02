@@ -82,6 +82,8 @@ class _ListPageState extends State<ListPage> {
                                 itemCount: listOne.length,
                                   itemBuilder: (context, indexTwo){
                                     return TicketDetailListTile(
+                                      docMainId: list[indexOne].id,
+                                      docId: listOne[indexTwo].id,
                                       from: widget.source,
                                       to: widget.destination,
                                       date: widget.date,

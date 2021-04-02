@@ -1,8 +1,12 @@
-import 'package:ebusticketing/view/seatSelection.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebusticketing/view/guestUser/seatSelection.dart';
 import 'package:flutter/material.dart';
 
 
+
 class TicketDetailListTile extends StatefulWidget {
+  final String docMainId;
+  final String docId;
   final String from;
   final String to;
   final String date;
@@ -12,7 +16,7 @@ class TicketDetailListTile extends StatefulWidget {
   final String busType;
   final String ticketPrice;
 
-  TicketDetailListTile({this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.to, this.from});
+  TicketDetailListTile({this.docMainId, this.docId, this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.to, this.from});
 
   @override
   _TicketDetailListTileState createState() => _TicketDetailListTileState();
@@ -27,6 +31,8 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
             return SeatSelection(
+              docMainId: widget.docMainId,
+              docId: widget.docId,
               to: widget.to,
               from: widget.from,
               date: widget.date,
@@ -34,6 +40,7 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
               price: widget.ticketPrice,
               time: widget.depTime,
               busType: widget.busType,
+              deptTime: widget.depTime,
             );
           },
         ));
@@ -74,22 +81,6 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                  SizedBox(height: 10.0),
-//                RaisedButton(
-//                  child: Text(
-//                    'Book Ticket'
-//                  ),
-//                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-//                  color: Color(0xFF047cb0),
-//                  onPressed: () {
-//                    Navigator.push(context, MaterialPageRoute(
-//                      builder: (context) {
-//                        return SeatSelection();
-//                      },
-//                    ));
-//                  },
-//                  textColor: Colors.white,
-//                ),
               ],
               ),
               Column(

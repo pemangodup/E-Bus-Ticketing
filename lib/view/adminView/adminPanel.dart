@@ -44,7 +44,7 @@ class _AdminPanelState extends State<AdminPanel> {
             backgroundColor: Color(0xFF047cb0)
         ),
         body: Center(
-          child: loggedInUser == null ?  AdminProfile() : Text('No user logged in'),
+          child: auth.FirebaseAuth.instance.currentUser.email.toString() == "pngodup123@gmail.com" ?  AdminProfile() : Text('No user logged in'),
         )
     );
   }

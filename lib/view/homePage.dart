@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ebusticketing/view/guestUser/searchFrame.dart';
-import 'package:ebusticketing/view/bookingList.dart';
+import 'package:ebusticketing/view/bookingsListTile.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 
 import 'adminView/adminPanel.dart';
+import 'booking.dart';
 
 
 
@@ -45,9 +47,29 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
             ),
             onLongPress: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return AdminPanel();
-              }));
+              print("*********************${FirebaseAuth.instance.currentUser.email.toString()}");
+              if(FirebaseAuth.instance.currentUser.email.toString() == "pngodup123@gmail.com")
+                {
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return AdminPanel();
+                  }));
+                }else{
+                showDialog(context: context,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        title: Text('Alert!'),
+                        content: Text('Admin Not Logged In'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Ok'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              }
             },
           ),
         ],

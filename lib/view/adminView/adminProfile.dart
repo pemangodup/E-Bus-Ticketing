@@ -1,5 +1,6 @@
 import 'package:ebusticketing/view/adminView/addBus/admin_add_origin_destination.dart';
 import 'package:ebusticketing/view/adminView/listBus/adminBusList.dart';
+import 'package:ebusticketing/view/adminView/updateTicket/updateUserTicket.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -16,48 +17,93 @@ class AdminProfile extends StatelessWidget {
         padding: const EdgeInsets.only(right: 10.0, left: 10.0),
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    textColor: Colors.white,
-                    color: Color(0xFF088ACB),
-                    child: Text(
-                      'Add Bus'
-                    ),
-                    onPressed: () {
-                      if(_auth.currentUser.email == 'pngodup123@gmail.com'){
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return AddBusDetail();
-                          },
-                        ));
-                      }
-                    },
-                  ),
-                  RaisedButton(
-                    textColor: Colors.white,
-                    color: Color(0xFF088ACB),
-                    child: Text(
-                        'Book Ticket'
-                    ),
-                    onPressed: () {
+            Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      RaisedButton(
+                        textColor: Colors.white,
+                        color: Color(0xFF088ACB),
+                        child: Text(
+                          'Add Bus'
+                        ),
+                        onPressed: () {
+                          if(_auth.currentUser.email == 'pngodup123@gmail.com'){
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return AddBusDetail();
+                              },
+                            ));
+                          }
+                        },
+                      ),
+                      RaisedButton(
+                        textColor: Colors.white,
+                        color: Color(0xFF088ACB),
+                        child: Text(
+                            'Book Ticket'
+                        ),
+                        onPressed: () {
 
-                    },
-                  ),
-                  RaisedButton(
-                    textColor: Colors.white,
-                    color: Color(0xFF088ACB),
-                    child: Text(
-                        'Bus List'
+                        },
+                      ),
+                      RaisedButton(
+                        textColor: Colors.white,
+                        color: Color(0xFF088ACB),
+                        child: Text(
+                            'Bus List'
+                        ),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return AdminBusList();
+                          },));
+                        },
+                      ),
+                    ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    RaisedButton(
+                      textColor: Colors.white,
+                      color: Color(0xFF088ACB),
+                      child: Text(
+                          'Update Ticket'
+                      ),
+                      onPressed: () {
+                        if(_auth.currentUser.email == 'pngodup123@gmail.com'){
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return UpdateUserProfile();
+                            },
+                          ));
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return AdminBusList();
-                      },));
-                    },
-                  ),
-                ],
+                    RaisedButton(
+                      textColor: Colors.white,
+                      color: Color(0xFF088ACB),
+                      child: Text(
+                          ''
+                      ),
+                      onPressed: () {
+
+                      },
+                    ),
+                    RaisedButton(
+                      textColor: Colors.white,
+                      color: Color(0xFF088ACB),
+                      child: Text(
+                          ''
+                      ),
+                      onPressed: () {
+
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

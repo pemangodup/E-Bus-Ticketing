@@ -1,3 +1,4 @@
+import 'package:ebusticketing/view/guestUser/userProfile.dart';
 import 'package:ebusticketing/view/sideNavigationMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -44,7 +45,7 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Color(0xFF047cb0)
       ),
       body: Center(
-        child: loggedInUser != null ?  AdminProfile() : Text('No user logged in'),
+        child: loggedInUser != null ?  UserProfile() : Text('No user logged in'),
       )
       );
   }

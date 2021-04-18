@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebusticketing/view/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_khalti/flutter_khalti.dart';
+
 
 
 class SeatSelection extends StatefulWidget {
@@ -309,7 +312,6 @@ class _SeatSelectionState extends State<SeatSelection> {
   Widget build(BuildContext context) {
     //conversion of value of price from string to integer
     int price = int.parse(widget.price);
-    FirebaseFirestore fb = FirebaseFirestore.instance;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
@@ -1003,85 +1005,107 @@ class _SeatSelectionState extends State<SeatSelection> {
             textColor: Colors.white,
             color: Color(0xFF047cb0),
             onPressed: () {
-              if(sA1 != null || sA2 != null || sA3 != null || sA4 != null || sA5 != null || sA6 != null || sA7 != null || sA8 != null || sA9 != null || sA10 != null || sB1 != null|| sB2 != null || sB3 != null || sB4 != null || sB5 != null || sB6 != null || sB7 != null || sB8 != null || sB9 != null || sB10 != null  )
+              if(FirebaseAuth.instance.currentUser != null){
+                if(sA1 != null || sA2 != null || sA3 != null || sA4 != null || sA5 != null || sA6 != null || sA7 != null || sA8 != null || sA9 != null || sA10 != null || sB1 != null|| sB2 != null || sB3 != null || sB4 != null || sB5 != null || sB6 != null || sB7 != null || sB8 != null || sB9 != null || sB10 != null  )
                 {
-                  FirebaseFirestore.instance.collection("BusInfo").doc("${widget.docMainId}")
-                      .collection("Details").doc("${widget.docId}").collection("Reserve").add({
-                    "date": "${widget.date}",
-                    "eMail": "${FirebaseAuth.instance.currentUser.email}",
-                    "total": "$total",
-                    "travelCompany": "${widget.travelCompany}",
-                    "departureTime": "${widget.deptTime}",
-                    "seatA1": "$sA1",
-                    "seatA2": "$sA2",
-                    "seatA3": "$sA3",
-                    "seatA4": "$sA4",
-                    "seatA5": "$sA5",
-                    "seatA6": "$sA6",
-                    "seatA7": "$sA7",
-                    "seatA8": "$sA8",
-                    "seatA9": "$sA9",
-                    "seatA10": "$sA10",
-                    "seatB1": "$sB1",
-                    "seatB2": "$sB2",
-                    "seatB3": "$sB3",
-                    "seatB4": "$sB4",
-                    "seatB5": "$sB5",
-                    "seatB6": "$sB6",
-                    "seatB7": "$sB7",
-                    "seatB8": "$sB8",
-                    "seatB9": "$sB9",
-                    "seatB10": "$sB10",
-                  });
-                  //adding in the database in bookings collection in order for respective user to view the details of bookings
-                  FirebaseFirestore.instance.collection("Bookings").doc().collection("${FirebaseAuth.instance.currentUser.email}").add({
-                    "mainId": "${widget.docMainId}",
-                    "docId": "${widget.docId}",
-                    "docLatestId": "${FirebaseFirestore.instance.collection("Bookings").doc("${FirebaseAuth.instance.currentUser.email}")
-                      .collection("Details").doc("${widget.docId}").collection("Reserve").id}",
-                    "eMail": "${FirebaseAuth.instance.currentUser.email}",
-                    "date": "${widget.date}",
-                    "total": "$total",
-                    "travelCompany": "${widget.travelCompany}",
-                    "departureTime": "${widget.deptTime}",
-                    "from": "${widget.from}",
-                    "to": "${widget.to}",
-                    "busType": "${widget.busType}",
-                    "ticketPrice": "${widget.price}",
-                    "seatA1": "$sA1",
-                    "seatA2": "$sA2",
-                    "seatA3": "$sA3",
-                    "seatA4": "$sA4",
-                    "seatA5": "$sA5",
-                    "seatA6": "$sA6",
-                    "seatA7": "$sA7",
-                    "seatA8": "$sA8",
-                    "seatA9": "$sA9",
-                    "seatA10": "$sA10",
-                    "seatB1": "$sB1",
-                    "seatB2": "$sB2",
-                    "seatB3": "$sB3",
-                    "seatB4": "$sB4",
-                    "seatB5": "$sB5",
-                    "seatB6": "$sB6",
-                    "seatB7": "$sB7",
-                    "seatB8": "$sB8",
-                    "seatB9": "$sB9",
-                    "seatB10": "$sB10",
-                  });
-
-                  Navigator.of(context).pop();
+                  _payViaKhalti(context);
+//
+//                  FirebaseFirestore.instance.collection("BusInfo").doc("${widget.docMainId}")
+//                      .collection("Details").doc("${widget.docId}").collection("Reserve").add({
+//                    "date": "${widget.date}",
+//                    "eMail": "${FirebaseAuth.instance.currentUser.email}",
+//                    "total": "$total",
+//                    "travelCompany": "${widget.travelCompany}",
+//                    "departureTime": "${widget.deptTime}",
+//                    "seatA1": "$sA1",
+//                    "seatA2": "$sA2",
+//                    "seatA3": "$sA3",
+//                    "seatA4": "$sA4",
+//                    "seatA5": "$sA5",
+//                    "seatA6": "$sA6",
+//                    "seatA7": "$sA7",
+//                    "seatA8": "$sA8",
+//                    "seatA9": "$sA9",
+//                    "seatA10": "$sA10",
+//                    "seatB1": "$sB1",
+//                    "seatB2": "$sB2",
+//                    "seatB3": "$sB3",
+//                    "seatB4": "$sB4",
+//                    "seatB5": "$sB5",
+//                    "seatB6": "$sB6",
+//                    "seatB7": "$sB7",
+//                    "seatB8": "$sB8",
+//                    "seatB9": "$sB9",
+//                    "seatB10": "$sB10",
+//                  });
+//                  //adding in the database in bookings collection in order for respective user to view the details of bookings
+//                  FirebaseFirestore.instance.collection("Bookings").doc().collection("${FirebaseAuth.instance.currentUser.email}").add({
+//                    "mainId": "${widget.docMainId}",
+//                    "docId": "${widget.docId}",
+//                    "docLatestId": "${FirebaseFirestore.instance.collection("Bookings").doc("${FirebaseAuth.instance.currentUser.email}")
+//                      .collection("Details").doc("${widget.docId}").collection("Reserve").id}",
+//                    "eMail": "${FirebaseAuth.instance.currentUser.email}",
+//                    "date": "${widget.date}",
+//                    "total": "$total",
+//                    "travelCompany": "${widget.travelCompany}",
+//                    "departureTime": "${widget.deptTime}",
+//                    "from": "${widget.from}",
+//                    "to": "${widget.to}",
+//                    "busType": "${widget.busType}",
+//                    "ticketPrice": "${widget.price}",
+//                    "seatA1": "$sA1",
+//                    "seatA2": "$sA2",
+//                    "seatA3": "$sA3",
+//                    "seatA4": "$sA4",
+//                    "seatA5": "$sA5",
+//                    "seatA6": "$sA6",
+//                    "seatA7": "$sA7",
+//                    "seatA8": "$sA8",
+//                    "seatA9": "$sA9",
+//                    "seatA10": "$sA10",
+//                    "seatB1": "$sB1",
+//                    "seatB2": "$sB2",
+//                    "seatB3": "$sB3",
+//                    "seatB4": "$sB4",
+//                    "seatB5": "$sB5",
+//                    "seatB6": "$sB6",
+//                    "seatB7": "$sB7",
+//                    "seatB8": "$sB8",
+//                    "seatB9": "$sB9",
+//                    "seatB10": "$sB10",
+//                  });
+//
+//                  Navigator.of(context).pop();
                 }else{
+                  showDialog(context: context,
+                      builder: (BuildContext context){
+                        return AlertDialog(
+                          title: Text('Alert!'),
+                          content: Text('No Seat Selected'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                }
+              }else{
                 showDialog(context: context,
                     builder: (BuildContext context){
                       return AlertDialog(
                         title: Text('Alert!'),
-                        content: Text('No Seat Selected'),
+                        content: Text('User Not Logged In Press Ok to log in'),
                         actions: <Widget>[
                           FlatButton(
                             child: Text('Ok'),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => Profile(),)
+                              );
                             },
                           ),
                         ],
@@ -1094,12 +1118,124 @@ class _SeatSelectionState extends State<SeatSelection> {
           RaisedButton(
             child: Text("Payment"),
             onPressed: (){
-
+              _payViaKhalti(context);
             },
           ),
         ],
       ),
     );
+  }
+
+  _payViaKhalti(BuildContext context) {
+    FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
+      publicKey: "test_public_key_eacadfb91994475d8bebfa577b0bca68",
+      urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
+    );
+
+    KhaltiProduct product = KhaltiProduct(
+      id: "test",
+      amount: 1000,
+      name: "Hello Product",
+    );
+    _flutterKhalti.startPayment(
+      product: product,
+      onSuccess: (data) {
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return _bookFinally();
+        }));
+      },
+      onFaliure: (error) {
+        print("sorry");
+      },
+    );
+  }
+
+  _bookFinally() {
+    if(sA1 != null || sA2 != null || sA3 != null || sA4 != null || sA5 != null || sA6 != null || sA7 != null || sA8 != null || sA9 != null || sA10 != null || sB1 != null|| sB2 != null || sB3 != null || sB4 != null || sB5 != null || sB6 != null || sB7 != null || sB8 != null || sB9 != null || sB10 != null  )
+    {
+      FirebaseFirestore.instance.collection("BusInfo").doc("${widget.docMainId}")
+          .collection("Details").doc("${widget.docId}").collection("Reserve").add({
+        "date": "${widget.date}",
+        "eMail": "${FirebaseAuth.instance.currentUser.email}",
+        "total": "$total",
+        "travelCompany": "${widget.travelCompany}",
+        "departureTime": "${widget.deptTime}",
+        "seatA1": "$sA1",
+        "seatA2": "$sA2",
+        "seatA3": "$sA3",
+        "seatA4": "$sA4",
+        "seatA5": "$sA5",
+        "seatA6": "$sA6",
+        "seatA7": "$sA7",
+        "seatA8": "$sA8",
+        "seatA9": "$sA9",
+        "seatA10": "$sA10",
+        "seatB1": "$sB1",
+        "seatB2": "$sB2",
+        "seatB3": "$sB3",
+        "seatB4": "$sB4",
+        "seatB5": "$sB5",
+        "seatB6": "$sB6",
+        "seatB7": "$sB7",
+        "seatB8": "$sB8",
+        "seatB9": "$sB9",
+        "seatB10": "$sB10",
+      });
+      //adding in the database in bookings collection in order for respective user to view the details of bookings
+      FirebaseFirestore.instance.collection("Bookings").doc("${FirebaseAuth.instance.currentUser.email}").collection("Details").add({
+        "mainId": "${widget.docMainId}",
+        "docId": "${widget.docId}",
+        "docLatestId": "${FirebaseFirestore.instance.collection("Bookings").doc("${FirebaseAuth.instance.currentUser.email}")
+            .collection("Details").doc("${widget.docId}").collection("Reserve").id}",
+        "eMail": "${FirebaseAuth.instance.currentUser.email}",
+        "date": "${widget.date}",
+        "total": "$total",
+        "travelCompany": "${widget.travelCompany}",
+        "departureTime": "${widget.deptTime}",
+        "from": "${widget.from}",
+        "to": "${widget.to}",
+        "busType": "${widget.busType}",
+        "ticketPrice": "${widget.price}",
+        "seatA1": "$sA1",
+        "seatA2": "$sA2",
+        "seatA3": "$sA3",
+        "seatA4": "$sA4",
+        "seatA5": "$sA5",
+        "seatA6": "$sA6",
+        "seatA7": "$sA7",
+        "seatA8": "$sA8",
+        "seatA9": "$sA9",
+        "seatA10": "$sA10",
+        "seatB1": "$sB1",
+        "seatB2": "$sB2",
+        "seatB3": "$sB3",
+        "seatB4": "$sB4",
+        "seatB5": "$sB5",
+        "seatB6": "$sB6",
+        "seatB7": "$sB7",
+        "seatB8": "$sB8",
+        "seatB9": "$sB9",
+        "seatB10": "$sB10",
+      });
+      int count = 2;
+      Navigator.of(context).popUntil((_) => count-- <= 0);
+    }else{
+      showDialog(context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+              title: Text('Alert!'),
+              content: Text('No Seat Selected'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Ok'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
+    }
   }
 
 }

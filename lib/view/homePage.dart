@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ebusticketing/view/guestUser/searchFrame.dart';
-import 'package:ebusticketing/view/bookingsListTile.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 
 import 'adminView/adminPanel.dart';

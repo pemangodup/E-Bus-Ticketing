@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ebusticketing/view/adminView/updateTicket/listTicetToUpdate.dart';
+import 'package:ebusticketing/view/adminView/updateTicket/updateBusDestinationListTile.dart';
 import 'package:flutter/material.dart';
 
 
@@ -43,74 +43,26 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-        child: ListView(
-          children: <Widget>[
-            TextField(
-              controller: clearFrom,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'mailId',
-                errorText: _inputIsValid ? null: 'Please fill the field',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  mailId = value;
-                });
-              },
-            ),
-            SizedBox(height: 10.0,),
-            Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.calendar_today),
-                  onPressed: () {
-                    selectDate(context);
-                  },
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                    date = '${_date.year.toString()}:${_date.month.toString()}:${_date.day.toString()}'
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            RaisedButton(
-              color: Color(0xFF047cb0),
-              child: Text('Search'),
-              textColor: Colors.white,
-              onPressed: () async{
-                if(mailId != null){
-                  print("$mailId");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ListTicketToUpdate(mailId: mailId,)),
-                  );
-                }else{
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('$mailId...'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                }
-              },
-            ),
-          ],
-        ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("BusInfo").snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot ) {
+            if(querySnapshot.hasError){
+              return Text('Error');
+            }
+            if(querySnapshot.connectionState == ConnectionState.waiting){
+              return CircularProgressIndicator();
+            }else{
+              final list = querySnapshot.data.docs;
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return UpdateBusDestinationListTile(from: list[index].get("From"), to: list[index].get("To"), docId: list[index].id,);
+                  }
+              );
+            }
+          },
+        )
       ),
     );
   }

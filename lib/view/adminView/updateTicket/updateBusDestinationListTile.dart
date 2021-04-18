@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-
-import 'admin_add_bus_detail.dart';
-
+import 'UpdateBusDetail.dart';
 
 
-class AddBusDestinationListTile extends StatelessWidget {
+
+class UpdateBusDestinationListTile extends StatefulWidget {
   final String from, to, docId;
-  AddBusDestinationListTile({this.from, this.to, this.docId});
+  UpdateBusDestinationListTile({this.from, this.to, this.docId});
+  @override
+  _UpdateBusDestinationListTileState createState() => _UpdateBusDestinationListTileState();
+}
+
+class _UpdateBusDestinationListTileState extends State<UpdateBusDestinationListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,19 +28,19 @@ class AddBusDestinationListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '$from - $to',
+                  '${widget.from} - ${widget.to}',
                   style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 RaisedButton(
-                  color: Colors.lightGreen,
-                  textColor: Colors.white,
-                  child: Text('Add'),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>BusDetail(from: from, to: to, docId: docId,)));
-                  }
+                    color: Colors.lightGreen,
+                    textColor: Colors.white,
+                    child: Text('Update'),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>UpdateBusDetail(from: widget.from, to: widget.to, docId: widget.docId,)));
+                    }
                 )
               ],
             ),

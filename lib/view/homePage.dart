@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ebusticketing/view/guestUser/searchFrame.dart';
@@ -46,7 +47,6 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
             ),
             onLongPress: (){
-              print("*********************${FirebaseAuth.instance.currentUser.email.toString()}");
               if(FirebaseAuth.instance.currentUser.email.toString() == "pngodup123@gmail.com")
                 {
                   Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -74,41 +74,67 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: child,
-      //SizedBox.expand(child: child)
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _index,
-        selectedItemColor: Color(0xFF047cb0),
-        unselectedItemColor: Color(0xFF047cb0),
-        onTap: (index) {
-          setState(() {
-            _index = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-          icon: Icon(
-            Icons.home,
-          color: Color(0xFF047cb0),
-          ),
-          title: Text('Home'),
-        ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.list,
-              color: Color(0xFF047cb0),
-            ),
-            title: Text('Bookings'),
-
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: Color(0xFF047cb0),
-            ),
-            title: Text('Profile'),
-          ),
-        ]
+      bottomNavigationBar: CurvedNavigationBar(
+        color: Color(0xFF047cb0),
+      backgroundColor: Colors.white70,
+      animationDuration: Duration(
+        milliseconds: 200
       ),
+      animationCurve: Curves.bounceOut,
+      height: 50.0,
+      items: <Widget>[
+        Icon(Icons.home, size: 30, color: Colors.white,),
+        Icon(Icons.list, size: 30, color: Colors.white,),
+        Icon(Icons.person, size: 30, color: Colors.white,),
+      ],
+      onTap: (index) {
+      setState(() {
+        _index = index;
+      });
+      },
+    ),
+
+
+
+
+
+
+//      BottomNavigationBar(
+//        currentIndex: _index,
+//        selectedItemColor: Color(0xFF047cb0),
+//        unselectedItemColor: Color(0xFF047cb0),
+//        onTap: (index) {
+//          setState(() {
+//            _index = index;
+//          });
+//        },
+//        items: [
+//          BottomNavigationBarItem(
+//          icon: Icon(
+//            Icons.home,
+//          color: Color(0xFF047cb0),
+//          ),
+//          title: Text('Home'),
+//        ),
+//          BottomNavigationBarItem(
+//            icon: Icon(
+//              Icons.list,
+//              color: Color(0xFF047cb0),
+//            ),
+//            title: Text('Bookings'),
+//
+//          ),
+//          BottomNavigationBarItem(
+//            icon: Icon(
+//              Icons.person,
+//              color: Color(0xFF047cb0),
+//            ),
+//            title: Text('Profile'),
+//          ),
+//        ]
+//      ),
+
+
     );
   }
 }

@@ -15,7 +15,6 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
   final clearFrom = TextEditingController();
   final clearTo = TextEditingController();
   String id;
-  bool _inputIsValid = true;
   String mailId, date;
 
   //for date picker pop up

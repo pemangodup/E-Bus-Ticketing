@@ -104,8 +104,10 @@ class _SignUpState extends State<SignUp> {
                     final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
                     //save in firestore
-                    dbRef.collection('user').doc('Admin').set({
+                    dbRef.collection('User').doc().set({
                       'email': '${_auth.currentUser.email}',
+                      "firstName": '$firstName',
+                      'lastName': '$lastName',
                     });
                     if(newUser != null){
                       Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);

@@ -43,25 +43,6 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
       widget.arrivalTime = _timeOfDay.toString();
     });
   }
-
-  // widget to enter numerical data
-//  Widget _numField(String numLabel){
-//    return  TextField(
-//      keyboardType: TextInputType.number,
-//      decoration: InputDecoration(
-//        labelText: numLabel,
-//        errorText: _inputIsValid ? null: 'Please fill the field',
-//        border: OutlineInputBorder(
-//          borderRadius: BorderRadius.circular(10.0),
-//        ),
-//      ),
-//      onChanged: (value) {
-//        widget.ticketPrice = value;
-//      },
-//    );
-//  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

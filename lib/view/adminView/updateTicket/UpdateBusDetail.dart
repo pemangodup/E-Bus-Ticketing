@@ -13,7 +13,6 @@ class UpdateBusDetail extends StatefulWidget {
 
 class _UpdateBusDetailState extends State<UpdateBusDetail> {
   String from, to;
-  final _dbRef = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +59,14 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
                                   return UpdateBusDetailTile(
                                     depTime: listSecond[index].get("departureTime"),
                                     date: listSecond[index].get("date"),
-                                    busType: listSecond[index].get("eMail"),
+                                    email: listSecond[index].get("eMail"),
+                                    bookedSeat: listSecond[index].get("seat"),
                                     secondDocumentId: listSecond[index].id,
+                                    total: listSecond[index].get("total"),
                                     yatayat: listSecond[index].get("travelCompany"),
-                                    beginningDocumentId: listFirst[index].id,);
+                                    beginningDocumentId: listFirst[index].id,
+                                    startDocId: widget.docId,
+                                    );
                                 }
                             );
                           }

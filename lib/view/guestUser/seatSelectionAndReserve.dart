@@ -1005,120 +1005,7 @@ class _SeatSelectionState extends State<SeatSelection> {
             textColor: Colors.white,
             color: Color(0xFF047cb0),
             onPressed: () {
-              if(FirebaseAuth.instance.currentUser != null){
-                if(sA1 != null || sA2 != null || sA3 != null || sA4 != null || sA5 != null || sA6 != null || sA7 != null || sA8 != null || sA9 != null || sA10 != null || sB1 != null|| sB2 != null || sB3 != null || sB4 != null || sB5 != null || sB6 != null || sB7 != null || sB8 != null || sB9 != null || sB10 != null  )
-                {
-                  _payViaKhalti(context);
-//
-//                  FirebaseFirestore.instance.collection("BusInfo").doc("${widget.docMainId}")
-//                      .collection("Details").doc("${widget.docId}").collection("Reserve").add({
-//                    "date": "${widget.date}",
-//                    "eMail": "${FirebaseAuth.instance.currentUser.email}",
-//                    "total": "$total",
-//                    "travelCompany": "${widget.travelCompany}",
-//                    "departureTime": "${widget.deptTime}",
-//                    "seatA1": "$sA1",
-//                    "seatA2": "$sA2",
-//                    "seatA3": "$sA3",
-//                    "seatA4": "$sA4",
-//                    "seatA5": "$sA5",
-//                    "seatA6": "$sA6",
-//                    "seatA7": "$sA7",
-//                    "seatA8": "$sA8",
-//                    "seatA9": "$sA9",
-//                    "seatA10": "$sA10",
-//                    "seatB1": "$sB1",
-//                    "seatB2": "$sB2",
-//                    "seatB3": "$sB3",
-//                    "seatB4": "$sB4",
-//                    "seatB5": "$sB5",
-//                    "seatB6": "$sB6",
-//                    "seatB7": "$sB7",
-//                    "seatB8": "$sB8",
-//                    "seatB9": "$sB9",
-//                    "seatB10": "$sB10",
-//                  });
-//                  //adding in the database in bookings collection in order for respective user to view the details of bookings
-//                  FirebaseFirestore.instance.collection("Bookings").doc().collection("${FirebaseAuth.instance.currentUser.email}").add({
-//                    "mainId": "${widget.docMainId}",
-//                    "docId": "${widget.docId}",
-//                    "docLatestId": "${FirebaseFirestore.instance.collection("Bookings").doc("${FirebaseAuth.instance.currentUser.email}")
-//                      .collection("Details").doc("${widget.docId}").collection("Reserve").id}",
-//                    "eMail": "${FirebaseAuth.instance.currentUser.email}",
-//                    "date": "${widget.date}",
-//                    "total": "$total",
-//                    "travelCompany": "${widget.travelCompany}",
-//                    "departureTime": "${widget.deptTime}",
-//                    "from": "${widget.from}",
-//                    "to": "${widget.to}",
-//                    "busType": "${widget.busType}",
-//                    "ticketPrice": "${widget.price}",
-//                    "seatA1": "$sA1",
-//                    "seatA2": "$sA2",
-//                    "seatA3": "$sA3",
-//                    "seatA4": "$sA4",
-//                    "seatA5": "$sA5",
-//                    "seatA6": "$sA6",
-//                    "seatA7": "$sA7",
-//                    "seatA8": "$sA8",
-//                    "seatA9": "$sA9",
-//                    "seatA10": "$sA10",
-//                    "seatB1": "$sB1",
-//                    "seatB2": "$sB2",
-//                    "seatB3": "$sB3",
-//                    "seatB4": "$sB4",
-//                    "seatB5": "$sB5",
-//                    "seatB6": "$sB6",
-//                    "seatB7": "$sB7",
-//                    "seatB8": "$sB8",
-//                    "seatB9": "$sB9",
-//                    "seatB10": "$sB10",
-//                  });
-//
-//                  Navigator.of(context).pop();
-                }else{
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('No Seat Selected'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                }
-              }else{
-                showDialog(context: context,
-                    builder: (BuildContext context){
-                      return AlertDialog(
-                        title: Text('Alert!'),
-                        content: Text('User Not Logged In Press Ok to log in'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Ok'),
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => Profile(),)
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              }
-
-            },
-          ),
-          RaisedButton(
-            child: Text("Payment"),
-            onPressed: (){
-              _payViaKhalti(context);
+              _bottomSheet(context);
             },
           ),
         ],
@@ -1134,7 +1021,7 @@ class _SeatSelectionState extends State<SeatSelection> {
 
     KhaltiProduct product = KhaltiProduct(
       id: "test",
-      amount: 1000,
+      amount: 10000,
       name: "Hello Product",
     );
     _flutterKhalti.startPayment(
@@ -1160,6 +1047,7 @@ class _SeatSelectionState extends State<SeatSelection> {
         "total": "$total",
         "travelCompany": "${widget.travelCompany}",
         "departureTime": "${widget.deptTime}",
+        "seat": "$listSeats",
         "seatA1": "$sA1",
         "seatA2": "$sA2",
         "seatA3": "$sA3",
@@ -1196,6 +1084,7 @@ class _SeatSelectionState extends State<SeatSelection> {
         "to": "${widget.to}",
         "busType": "${widget.busType}",
         "ticketPrice": "${widget.price}",
+        "seat": "$listSeats",
         "seatA1": "$sA1",
         "seatA2": "$sA2",
         "seatA3": "$sA3",
@@ -1236,6 +1125,77 @@ class _SeatSelectionState extends State<SeatSelection> {
             );
           });
     }
+  }
+
+  void _bottomSheet(context) {
+    showModalBottomSheet(context: context, builder: (BuildContext c){
+      return Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: new BorderRadius.only(
+                topLeft: const Radius.circular(50.0),
+                topRight: const Radius.circular(50.0))
+        ),
+        height: 300.0,
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 100.0,),
+            RaisedButton(
+              color: Color(0xFF07538a),
+              child: Text(
+                  "Pay Via Khalti",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: (){
+                  if(FirebaseAuth.instance.currentUser != null){
+                    if(sA1 != null || sA2 != null || sA3 != null || sA4 != null || sA5 != null || sA6 != null || sA7 != null || sA8 != null || sA9 != null || sA10 != null || sB1 != null|| sB2 != null || sB3 != null || sB4 != null || sB5 != null || sB6 != null || sB7 != null || sB8 != null || sB9 != null || sB10 != null  )
+                    {
+                      _payViaKhalti(context);
+                    }else{
+                      showDialog(context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text('Alert!'),
+                              content: Text('No Seat Selected'),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    }
+                  }else{
+                    showDialog(context: context,
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Text('Alert!'),
+                            content: Text('User Not Logged In Press Ok to log in'),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Ok'),
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => Profile(),)
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  }
+              },
+            ),
+          ],
+        )
+      );
+    });
+
   }
 
 }

@@ -1,17 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_khalti/flutter_khalti.dart';
+
 
 class UpdateBusDetailTile extends StatelessWidget {
   final String date;
   final String depTime;
   final String arriveTime;
   final String yatayat;
-  final String busType;
+  final String email;
   final String ticketPrice;
+  final String bookedSeat;
+  final String total;
   final String beginningDocumentId;
   final String secondDocumentId;
+  final String startDocId;
 
   UpdateBusDetailTile({this.date, this.beginningDocumentId, this.depTime,
-    this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.secondDocumentId});
+    this.arriveTime, this.total, this.yatayat, this.email, this.ticketPrice, this.bookedSeat, this.secondDocumentId, this.startDocId});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,7 @@ class UpdateBusDetailTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '$depTime - $arriveTime',
+                      'Departure: $depTime',
                       style: TextStyle(
                         color: Colors.red,
                         fontSize: 18.0,
@@ -42,33 +48,63 @@ class UpdateBusDetailTile extends StatelessWidget {
                     ),
                     SizedBox(height: 10.0,),
                     Text(
+                      'Dept. Date: $date',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text(
                       '$yatayat',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text(
+                      'Seat: $bookedSeat',
+                      style: TextStyle(
+                        fontSize: 13.0,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     SizedBox(height: 10.0),
                     Text(
-                      '$busType',
+                      'Id: $email',
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 13.0,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     RaisedButton(
-                      child: Text(
-                          'Update'
-                      ),
+                      child: Text("Delete"),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                       color: Color(0xFF047cb0),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return null;//UpdateBusDetail(travelCompany: yatayat, ticketPrice: ticketPrice, to: to, from: from,
-                                //busType: busType, arrivalTime: arriveTime, depTime: depTime, documentId: beginningDocumentId, secondDocumentId: secondDocumentId);
-                          },
-                        ));
+                        showDialog(context: context,
+                            builder: (BuildContext context){
+                              return AlertDialog(
+                                title: Text('Delete?'),
+                                content: Text('Delete or Not?'),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Delete'),
+                                    onPressed: () {
+                                      _returnBack(context);
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+
                       },
                       textColor: Colors.white,
                     ),
@@ -79,7 +115,7 @@ class UpdateBusDetailTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Rs. $ticketPrice',
+                      'Rs. $total',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.0,
@@ -91,5 +127,28 @@ class UpdateBusDetailTile extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  _returnBack(BuildContext context) {
+    FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
+      publicKey: "test_public_key_eacadfb91994475d8bebfa577b0bca68",
+      urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
+    );
+
+    KhaltiProduct product = KhaltiProduct(
+      id: "test",
+      amount: 10000,
+      name: "Hello Product",
+    );
+    _flutterKhalti.startPayment(
+      product: product,
+      onSuccess: (data) {
+        FirebaseFirestore.instance.collection("BusInfo").doc(startDocId).collection("Details").doc(beginningDocumentId).collection("Reserve").doc(secondDocumentId).delete();
+        Navigator.pop(context);
+      },
+      onFaliure: (error) {
+        print("sorry");
+      },
+    );
   }
 }

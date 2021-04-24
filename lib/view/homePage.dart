@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ebusticketing/view/guestUser/searchFrame.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
-
 import 'adminView/adminPanel.dart';
 import 'booking.dart';
 
@@ -36,42 +35,37 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: new AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xFF07538a),
-        title: Text(
-            'eBusTicketing'
-        ),
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
-            onLongPress: (){
-              if(FirebaseAuth.instance.currentUser.email.toString() == "pngodup123@gmail.com")
-                {
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return AdminPanel();
-                  }));
-                }else{
-                showDialog(context: context,
-                    builder: (BuildContext context){
-                      return AlertDialog(
-                        title: Text('Alert!'),
-                        content: Text('Admin Not Logged In'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Ok'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    });
-              }
-            },
+        title: GestureDetector(
+          onLongPress: (){
+            if(FirebaseAuth.instance.currentUser.email.toString() == "pngodup123@gmail.com")
+            {
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return AdminPanel();
+              }));
+            }else{
+              showDialog(context: context,
+                  builder: (BuildContext context){
+                    return AlertDialog(
+                      title: Text('Alert!'),
+                      content: Text('Admin Not Logged In'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('Ok'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            }
+          },
+          child: Text(
+              'eBusTicketing'
           ),
-        ],
+        ),
       ),
       body: child,
       bottomNavigationBar: CurvedNavigationBar(

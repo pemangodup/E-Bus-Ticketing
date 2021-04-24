@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_khalti/flutter_khalti.dart';
 
@@ -130,25 +131,29 @@ class UpdateBusDetailTile extends StatelessWidget {
   }
 
   _returnBack(BuildContext context) {
-    FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
-      publicKey: "test_public_key_eacadfb91994475d8bebfa577b0bca68",
-      urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
-    );
+//    FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
+//      publicKey: "test_public_key_eacadfb91994475d8bebfa577b0bca68",
+//      urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
+//    );
+//
+//    KhaltiProduct product = KhaltiProduct(
+//      id: "test",
+//      amount: 10000,
+//      name: "Hello Product",
+//    );
+//    _flutterKhalti.startPayment(
+//      product: product,
+//      onSuccess: (data) {
+//        FirebaseFirestore.instance.collection("BusInfo").doc(startDocId).collection("Details").doc(beginningDocumentId).collection("Reserve").doc(secondDocumentId).delete();
+//        Navigator.pop(context);
+//      },
+//      onFaliure: (error) {
+//        print("sorry");
+//      },
+//    );
+  }
 
-    KhaltiProduct product = KhaltiProduct(
-      id: "test",
-      amount: 10000,
-      name: "Hello Product",
-    );
-    _flutterKhalti.startPayment(
-      product: product,
-      onSuccess: (data) {
-        FirebaseFirestore.instance.collection("BusInfo").doc(startDocId).collection("Details").doc(beginningDocumentId).collection("Reserve").doc(secondDocumentId).delete();
-        Navigator.pop(context);
-      },
-      onFaliure: (error) {
-        print("sorry");
-      },
-    );
+  _bookFinally() {
+
   }
 }

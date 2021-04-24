@@ -1106,8 +1106,9 @@ class _SeatSelectionState extends State<SeatSelection> {
         "seatB9": "$sB9",
         "seatB10": "$sB10",
       });
-      int count = 2;
-      Navigator.of(context).popUntil((_) => count-- <= 0);
+      Navigator.push(context, MaterialPageRoute(builder: (Contex){
+        return SeatSelection();
+      }));
     }else{
       showDialog(context: context,
           builder: (BuildContext context){

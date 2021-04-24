@@ -38,6 +38,7 @@ dependencies:
   autocomplete_textfield: ^1.7.3
   flutter_khalti: ^1.0.0
   modal_bottom_sheet:
+  animated_splash_screen:
 
 
 dev_dependencies:

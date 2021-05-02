@@ -1,15 +1,39 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebusticketing/view/profile/profileDetailTile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 
 
 class UserProfile extends StatefulWidget {
+
   @override
   _UserProfileState createState() => _UserProfileState();
 }
 
 class _UserProfileState extends State<UserProfile> {
+  File _profileImage;
+  final picker = ImagePicker();
+
+
+  @override
+  void initState() {
+    FirebaseFirestore.instance.collection("User").get().then((value){
+      value.docs.forEach((element) {
+        setState(() {
+          _firstName = element.get("firstName");
+          _lastName = element.get("lastName");
+        });
+      });
+    });
+    super.initState();
+  }
+  String _firstName, _lastName;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,6 +66,16 @@ class _UserProfileState extends State<UserProfile> {
                     topRight: Radius.circular(30.0),
                   )
               ),
+              child: Column(
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Press"),
+                    onPressed: () {
+                      getImage(ImageSource.camera);
+                      },
+                  )
+                ],
+              ),
             ),
           ),
 
@@ -59,7 +93,7 @@ class _UserProfileState extends State<UserProfile> {
                   backgroundColor: Colors.white,
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 Text(
                     "${FirebaseAuth.instance.currentUser.email}",
@@ -68,6 +102,14 @@ class _UserProfileState extends State<UserProfile> {
                     fontSize: 20.0,
                   ),
                 ),
+                SizedBox(height:5.0),
+                Text(
+                  "$_firstName $_lastName",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
+                ),
               ],
             ),
           ),
@@ -75,5 +117,17 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
     );
+  }
+
+  void getImage(ImageSource gallery) async {
+    PickedFile imageFile = await picker.getImage(source: gallery);
+    if (imageFile == null) return;
+    File tmpFile = File(imageFile.path);
+//    final appDir = await getApplicationDocumentsDirectory();
+//    final fileName = basename(imageFile.path);
+//    tmpFile = await tmpFile.copy('${appDir.path}/$fileName');
+    setState(() {
+      _profileImage = tmpFile;
+    });
   }
 }

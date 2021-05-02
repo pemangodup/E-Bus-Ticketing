@@ -102,7 +102,6 @@ class _SignUpState extends State<SignUp> {
                 onPressed: () async{
                   try {
                     final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-
                     //save in firestore
                     dbRef.collection('User').doc().set({
                       'email': '${_auth.currentUser.email}',

@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     //creation of child widget for navigating purpose
     Widget child;
     switch (_index) {
@@ -68,6 +69,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: child,
+      //Bottom navigation code starts here
       bottomNavigationBar: CurvedNavigationBar(
         color: Color(0xFF047cb0),
       backgroundColor: Colors.white70,
@@ -83,52 +85,11 @@ class _HomePageState extends State<HomePage> {
       ],
       onTap: (index) {
       setState(() {
+        //_index part is at top before scaffold
         _index = index;
       });
       },
     ),
-
-
-
-
-
-
-//      BottomNavigationBar(
-//        currentIndex: _index,
-//        selectedItemColor: Color(0xFF047cb0),
-//        unselectedItemColor: Color(0xFF047cb0),
-//        onTap: (index) {
-//          setState(() {
-//            _index = index;
-//          });
-//        },
-//        items: [
-//          BottomNavigationBarItem(
-//          icon: Icon(
-//            Icons.home,
-//          color: Color(0xFF047cb0),
-//          ),
-//          title: Text('Home'),
-//        ),
-//          BottomNavigationBarItem(
-//            icon: Icon(
-//              Icons.list,
-//              color: Color(0xFF047cb0),
-//            ),
-//            title: Text('Bookings'),
-//
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(
-//              Icons.person,
-//              color: Color(0xFF047cb0),
-//            ),
-//            title: Text('Profile'),
-//          ),
-//        ]
-//      ),
-
-
     );
   }
 }

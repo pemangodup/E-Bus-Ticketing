@@ -3,6 +3,7 @@ import 'package:ebusticketing/view/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_khalti/flutter_khalti.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 
 
@@ -149,7 +150,6 @@ class _SeatSelectionState extends State<SeatSelection> {
         String value10 = element.get("seatA10");
 
         // values for B side
-
         String value11 = element.get("seatB1");
         String value12 = element.get("seatB2");
         String value13 = element.get("seatB3");
@@ -1155,40 +1155,28 @@ class _SeatSelectionState extends State<SeatSelection> {
                     {
                       _payViaKhalti(context);
                     }else{
-                      showDialog(context: context,
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              title: Text('Alert!'),
-                              content: Text('No Seat Selected'),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          });
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.INFO,
+                        animType: AnimType.BOTTOMSLIDE,
+                        title: 'Alert',
+                        desc: 'No seat selected....',
+                        btnOkOnPress: () {
+                          Navigator.of(context).pop();
+                        },
+                      )..show();
                     }
                   }else{
-                    showDialog(context: context,
-                        builder: (BuildContext context){
-                          return AlertDialog(
-                            title: Text('Alert!'),
-                            content: Text('User Not Logged In Press Ok to log in'),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Ok'),
-                                onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => Profile(),)
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        });
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.INFO,
+                      animType: AnimType.BOTTOMSLIDE,
+                      title: 'Alert',
+                      desc: 'User Not Logged In Press Ok to log in....',
+                      btnOkOnPress: () {
+                        MaterialPageRoute(builder: (context) => Profile());
+                      },
+                    )..show();
                   }
               },
             ),

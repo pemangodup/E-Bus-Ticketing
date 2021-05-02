@@ -37,8 +37,11 @@ dependencies:
   firebase_database: ^4.3.0
   autocomplete_textfield: ^1.7.3
   flutter_khalti: ^1.0.0
+  awesome_dialog:
   modal_bottom_sheet:
   animated_splash_screen:
+  image_picker:
+  flutter_rating_bar:
 
 
 dev_dependencies:

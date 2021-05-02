@@ -1,6 +1,7 @@
 import 'package:ebusticketing/view/guestUser/seatSelectionAndReserve.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 
 class TicketDetailListTile extends StatefulWidget {
@@ -25,6 +26,17 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: (){
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.INFO,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'Dialog Title',
+          desc: 'Dialog description here.............',
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {},
+        )..show();
+      },
       behavior: HitTestBehavior.opaque,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
@@ -85,6 +97,17 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  RatingBarIndicator(
+                    rating: 2,
+                    itemBuilder: (context, index) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    itemCount: 5,
+                    itemSize: 20.0,
+                    direction: Axis.horizontal,
+                  ),
+
                   Text(
                     'Rs. ${widget.ticketPrice}',
                     style: TextStyle(

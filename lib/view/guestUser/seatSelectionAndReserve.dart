@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebusticketing/view/guestUser/searchFrame.dart';
+import 'package:ebusticketing/view/homePage.dart';
 import 'package:ebusticketing/view/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -1027,12 +1029,22 @@ class _SeatSelectionState extends State<SeatSelection> {
     _flutterKhalti.startPayment(
       product: product,
       onSuccess: (data) {
+        _bookFinally();
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return _bookFinally();
+          return HomePage();
         }));
       },
       onFaliure: (error) {
-        print("sorry");
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.INFO,
+          animType: AnimType.TOPSLIDE,
+          title: 'Info',
+          desc: 'Payment not complete',
+          btnOkOnPress: (){
+            MaterialPageRoute(builder: (context) => Profile());
+          }
+          ).show();
       },
     );
   }
@@ -1106,25 +1118,6 @@ class _SeatSelectionState extends State<SeatSelection> {
         "seatB9": "$sB9",
         "seatB10": "$sB10",
       });
-      Navigator.push(context, MaterialPageRoute(builder: (Contex){
-        return SeatSelection();
-      }));
-    }else{
-      showDialog(context: context,
-          builder: (BuildContext context){
-            return AlertDialog(
-              title: Text('Alert!'),
-              content: Text('No Seat Selected'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Ok'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          });
     }
   }
 
@@ -1132,12 +1125,12 @@ class _SeatSelectionState extends State<SeatSelection> {
     showModalBottomSheet(context: context, builder: (BuildContext c){
       return Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.blue,
             borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(50.0),
-                topRight: const Radius.circular(50.0))
+                topLeft: const Radius.circular(0.0),
+                topRight: const Radius.circular(0.0))
         ),
-        height: 300.0,
+        height: 250.0,
         child: Column(
           children: <Widget>[
             SizedBox(height: 100.0,),

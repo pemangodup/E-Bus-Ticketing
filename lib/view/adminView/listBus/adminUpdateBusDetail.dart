@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 
 // ignore: must_be_immutable
@@ -194,6 +195,15 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
     fb.collection("BusInfo").doc(widget.documentId).collection("Details").doc(widget.secondDocumentId).delete().catchError((e){
       print(e);
     });
-    Navigator.pop(context);
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.INFO,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'Alert',
+      desc: 'Got Deleted',
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
+    )..show();
   }
 }

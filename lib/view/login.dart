@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 
 
@@ -60,15 +61,34 @@ class _LoginPageState extends State<LoginPage> {
               RaisedButton(
                 elevation: 10,
                 onPressed: () async{
-                  try {
-                    await _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
+                  if(email != null && password != null){
+                    try {
+                      await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
 
-                    Navigator.pushNamedAndRemoveUntil(
+                      Navigator.pushNamedAndRemoveUntil(
                           context, 'home', (route) => false);
-                  }catch(e){
-                    print(e);
+                    }catch(e){
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.INFO,
+                        animType: AnimType.BOTTOMSLIDE,
+                        title: 'Alert',
+                        desc: 'Wrong username or password.......',
+                        btnOkOnPress: () {},
+                      )..show();
+                    }
+                  }else{
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.INFO,
+                      animType: AnimType.BOTTOMSLIDE,
+                      title: 'Alert',
+                      desc: 'Email or Password is empty.........',
+                      btnOkOnPress: () {},
+                    )..show();
                   }
+
                 },
                 color: Color(0xFF047cb0),
                 child: Text(

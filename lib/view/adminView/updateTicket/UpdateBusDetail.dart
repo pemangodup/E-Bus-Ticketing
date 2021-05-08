@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ebusticketing/view/adminView/updateTicket/updateBusDetailTile.dart';
+import 'package:ebusticketing/view/adminView/listBus/adminBusListTile.dart';
+import 'package:ebusticketing/view/adminView/updateTicket/UpdateBusDetailTile.dart';
+import 'package:ebusticketing/view/adminView/updateTicket/deleteUserTicketTile.dart';
 import 'package:flutter/material.dart';
 
 
@@ -20,7 +22,7 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
       appBar: AppBar(
         backgroundColor: Color(0xFF07538a),
         title: Text(
-            'Update User Ticket'
+            'List of ticket Ticket'
         ),
         centerTitle: true,
       ),
@@ -35,45 +37,23 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
             if(querySnapshot.connectionState == ConnectionState.waiting){
               return CircularProgressIndicator();
             }else{
-              final listFirst = querySnapshot.data.docs;
-              return SizedBox(
-                height: 200.0,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: listFirst.length,
-                    itemBuilder: (context, index) {
-                      return StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection("BusInfo").doc(widget.docId).collection("Details").doc(listFirst[index].id).collection("Reserve").snapshots(),
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> querySnapshot ) {
-                          if(querySnapshot.hasError){
-                            return Text('Error');
-                          }
-                          if(querySnapshot.connectionState == ConnectionState.waiting){
-                            return CircularProgressIndicator();
-                          }else{
-                            final listSecond = querySnapshot.data.docs;
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: listSecond.length,
-                                itemBuilder: (context, index) {
-                                  return UpdateBusDetailTile(
-                                    depTime: listSecond[index].get("departureTime"),
-                                    date: listSecond[index].get("date"),
-                                    email: listSecond[index].get("eMail"),
-                                    bookedSeat: listSecond[index].get("seat"),
-                                    secondDocumentId: listSecond[index].id,
-                                    total: listSecond[index].get("total"),
-                                    yatayat: listSecond[index].get("travelCompany"),
-                                    beginningDocumentId: listFirst[index].id,
-                                    startDocId: widget.docId,
-                                    );
-                                }
-                            );
-                          }
-                        },
-                      );
-                    }
-                ),
+              final list = querySnapshot.data.docs;
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return UpdateBusDetailTile2(
+                      from: widget.from,
+                        to: widget.to,
+                       beginningDocumentId: widget.docId,
+                        yatayat: list[index].get("TravelCompany"),
+                        arriveTime: list[index].get("ArrivalTime"),
+                        ticketPrice: list[index].get("TicketPrice"),
+                        busType: list[index].get("BusType"),
+                        depTime: list[index].get("DepartureTime"),
+                        secondDocumentId: list[index].id
+                    );
+                  }
               );
             }
           },

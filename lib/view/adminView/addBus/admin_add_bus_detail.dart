@@ -1,4 +1,4 @@
-import 'package:ebusticketing/view/profile/profile.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -19,7 +19,7 @@ class _BusDetailState extends State<BusDetail> {
   final _dbRef = FirebaseFirestore.instance;
 
   bool _inputIsValid = true;
-  String depTime, arrivalTime, travelCompany, busType, ticketPrice;
+  String depTime, arrivalTime, travelCompany, busType, busNo, ticketPrice;
   TimeOfDay _timeOfDay= TimeOfDay.now();
   TimeOfDay picked;
   TextEditingController _timeControllerDeparture = TextEditingController();
@@ -120,6 +120,20 @@ class _BusDetailState extends State<BusDetail> {
             ),
             SizedBox(height: 10.0,),
             TextField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Bus No.',
+                errorText: _inputIsValid ? null: 'Please fill the field',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: (value) {
+                busNo = value;
+              },
+            ),
+            SizedBox(height: 10.0,),
+            TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Ticket Price',
@@ -135,46 +149,44 @@ class _BusDetailState extends State<BusDetail> {
             SizedBox(height: 10.0,),
             RaisedButton(
               onPressed: () {
-                if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null ){
+                if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null ) {
                       _dbRef.collection('BusInfo').doc(widget.docId).collection('Details').doc().set({
-                          'DepartureTime': depTime,
-                          'ArrivalTime': arrivalTime,
-                          'TravelCompany': travelCompany,
-                          'BusType': busType,
-                          'TicketPrice': ticketPrice,
-                  }).then((value) => print('******************** Added to ${_dbRef.collection('BusInfo').doc(widget.docId)} *********************'));
-                  Navigator.pop(context);
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('Got Added'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                        'DepartureTime': depTime,
+                        'ArrivalTime': arrivalTime,
+                        'TravelCompany': travelCompany,
+                        'BusType': busType,
+                        'BusNo': busNo,
+                        'TicketPrice': ticketPrice,
+                  }).then((value) => print('******************** Added to ${_dbRef.collection('BusInfo')
+                          .doc(widget.docId)} *********************'));
+//                if(depTime!=null && arrivalTime!=null && travelCompany!=null && busType!=null && ticketPrice!=null ) {
+//                  _dbRef.collection('Comments').doc().set({
+//                    'DepartureTime': depTime,
+//                    'TravelCompany': travelCompany,
+//                    'BusType': busType,
+//                  });
+//                }
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.INFO,
+                  animType: AnimType.BOTTOMSLIDE,
+                  title: 'Alert',
+                  desc: 'Got Added',
+                  btnOkOnPress: () {
+                    Navigator.pop(context);
+                    },
+                )..show();
                 }else{
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('Field Empty...'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.INFO,
+                    animType: AnimType.BOTTOMSLIDE,
+                    title: 'Alert',
+                    desc: 'Some field are empty',
+                    btnOkOnPress: () {
+                      Navigator.pop(context);
+                    },
+                  )..show();
                 }
               },
               color: Color(0xFF047cb0),

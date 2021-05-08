@@ -1,10 +1,8 @@
-import 'package:ebusticketing/services/weatherService.dart';
 import 'package:ebusticketing/view/guestUser/locationSearch.dart';
 import 'package:ebusticketing/view/guestUser/ticketTiming.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
+
 
 
 

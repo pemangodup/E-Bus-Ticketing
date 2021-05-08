@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -67,36 +68,26 @@ class _AddBusDetailState extends State<AddBusDetail> {
               onPressed: () {
                 if(from != null && to != null){
                   _dbRef.collection("BusInfo").doc().set({"From":from, "To":to});
-                  AlertDialog(
-                    title: Text('Notification!'),
-                    content: Text('Added To Database'),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text('Ok'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
+                  _dbRef.collection("Comments").doc().set({"From":from, "To":to});
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.INFO,
+                    animType: AnimType.BOTTOMSLIDE,
+                    title: 'Notification',
+                    desc: 'Added To Database..',
+                    btnOkOnPress: () {},
+                  )..show();
                   clearFrom.clear();
                   clearTo.clear();
                 }else{
-                  showDialog(context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text('Alert!'),
-                          content: Text('Field Empty...'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.INFO,
+                    animType: AnimType.BOTTOMSLIDE,
+                    title: 'Alert',
+                    desc: 'Field empty.............',
+                    btnOkOnPress: () {},
+                  )..show();
                 }
 
               },

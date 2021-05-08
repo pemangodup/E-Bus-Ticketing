@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebusticketing/view/guestUser/seatSelectionAndReserve.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 
+
+
+//This clas is a tile for listing out the list of bus available for a particular route
 class TicketDetailListTile extends StatefulWidget {
   final String docMainId;
   final String docId;
@@ -23,21 +27,50 @@ class TicketDetailListTile extends StatefulWidget {
 }
 
 class _TicketDetailListTileState extends State<TicketDetailListTile> {
+
+  String comment, _controller;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onLongPress: (){
         AwesomeDialog(
           context: context,
           dialogType: DialogType.INFO,
-          animType: AnimType.BOTTOMSLIDE,
-          title: 'Dialog Title',
-          desc: 'Dialog description here.............',
-          btnCancelOnPress: () {},
-          btnOkOnPress: () {},
+          animType: AnimType.SCALE,
+          body: Column(
+            children: <Widget>[
+              Text("Feedback"),
+              TextField(
+                onChanged: (value) {
+                  setState(() {
+                    comment = value;
+                  });
+                },
+              ),
+            ],
+          ),
+          btnCancelOnPress: () {
+          },
+          btnOkText: 'Feedback',
+          btnOkOnPress: () {
+            int feedback = 1;
+            if(comment != null){
+              FirebaseFirestore.instance.collection("Comments").doc(widget.docId).collection("ListComments").doc().set({
+                "docMainId": widget.docMainId,
+                "feedback": feedback,
+                "docId": widget.docId,
+                "to": widget.to,
+                "from": widget.from,
+                "date": widget.date,
+                "comment": comment,
+                "departure": widget.depTime,
+              }).then((value) => print('******************** Commented to *********************'));
+              print("I am comment: $comment");
+            }
+          },
         )..show();
       },
-      behavior: HitTestBehavior.opaque,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {

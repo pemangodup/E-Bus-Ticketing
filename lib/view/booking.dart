@@ -18,38 +18,6 @@ class _BookingState extends State<Booking> {
   var selectedSeats = new List();
 
   @override
-  void initState() {
-    FirebaseFirestore.instance.collection("Bookings").doc("${_auth.currentUser.email}").collection("Details").get().then((querySnapshot){
-      querySnapshot.docs.forEach((element) {
-        setState(() {
-          String sA1 = element.get("seatA1");
-          String sA2 = element.get("seatA2");
-          String sA3 = element.get("seatA3");
-          String sA4 = element.get("seatA4");
-          String sA5 = element.get("seatA5");
-
-          if(sA1 != "null"){
-            selectedSeats.add("A1");
-          }
-          if(sA2 != "null"){
-            selectedSeats.add("A2");
-          }
-          if(sA3 != "null"){
-            selectedSeats.add("A3");
-          }
-          if(sA4 != "null"){
-            selectedSeats.add("A4");
-          }
-          if(sA5 != "null"){
-            selectedSeats.add("A5");
-          }
-        });
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebusticketing/view/adminView/adminProfile.dart';
 import 'package:ebusticketing/view/profile/profileDetailTile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return FirebaseAuth.instance.currentUser.email == 'pngodup123@gmail.com'? AdminProfile(): Container(
       color: Colors.white70,
       child: Stack(
         children: <Widget>[

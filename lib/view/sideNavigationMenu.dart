@@ -33,10 +33,6 @@ class NavDrawer extends StatelessWidget {
           ),
           decoration: BoxDecoration(
               color: Color(0xFF047cb0),
-//              image: DecorationImage(
-//                  fit: BoxFit.fill,
-//                  image: AssetImage('assets/images/cover.jpg'),
-//              )
           ),
           ),
           ListTile(

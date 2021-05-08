@@ -31,22 +31,6 @@ class _BookingsListTileState extends State<BookingsListTile> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-//        Navigator.push(context, MaterialPageRoute(
-//          builder: (context) {
-//            return SeatSelection(
-//              docMainId: widget.docMainId,
-//              docId: widget.docId,
-//              to: widget.to,
-//              from: widget.from,
-//              date: widget.date,
-//              travelCompany: widget.yatayat,
-//              price: widget.ticketPrice,
-//              time: widget.depTime,
-//              busType: widget.busType,
-//              deptTime: widget.depTime,
-//            );
-//          },
-//        ));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10.0),
@@ -94,15 +78,8 @@ class _BookingsListTileState extends State<BookingsListTile> {
                     ),
                   ),
                   SizedBox(height: 12.0,),
-//                  Text(
-//                    'Seat No.:  ${widget.seats}',
-//                    style: TextStyle(
-//                      fontWeight: FontWeight.w400,
-//                    ),
-//                  ),
-//                  SizedBox(height: 12.0,),
                   Text(
-                    'Travel Company:  ${widget.yatayat}',
+                    'Travel:  ${widget.yatayat}',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                     ),

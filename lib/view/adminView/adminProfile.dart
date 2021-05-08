@@ -1,6 +1,7 @@
 import 'package:ebusticketing/view/adminView/addBus/admin_add_origin_destination.dart';
 import 'package:ebusticketing/view/adminView/listBus/adminBusList.dart';
 import 'package:ebusticketing/view/adminView/updateTicket/updateUserTicket.dart';
+import 'package:ebusticketing/view/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -37,7 +38,8 @@ class AdminProfile extends StatelessWidget {
               width: 415.0,
               height: 600.0,
               decoration: BoxDecoration(
-                  color: Color(0xFFe0e0eb),
+                  color: Colors.white,
+//                  Color(0xFFe0e0eb),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25.0),
                     topRight: Radius.circular(25.0),
@@ -97,7 +99,9 @@ class AdminProfile extends StatelessWidget {
                                     ],
                                   ),
                                   onPressed: () {
-
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                      return HomePage();
+                                    }));
                                   },
                                 ),
                               ),
@@ -117,9 +121,9 @@ class AdminProfile extends StatelessWidget {
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(height: 20.0,),
-                                    Icon(Icons.update),
+                                    Icon(Icons.delete),
                                     Text(
-                                        'UpdateTicket'
+                                        'Delete Ticket'
                                     ),
                                   ],
                                 ),
@@ -143,9 +147,9 @@ class AdminProfile extends StatelessWidget {
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(height: 20.0,),
-                                    Icon(Icons.list),
+                                    Icon(Icons.update),
                                     Text(
-                                        'Bus List'
+                                        'Update'
                                     ),
                                   ],
                                 ),
@@ -168,103 +172,6 @@ class AdminProfile extends StatelessWidget {
           ),
         ],
       )
-
-//      Padding(
-//        padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-//        child: Column(
-//          children: <Widget>[
-//            Column(
-//              children: <Widget>[
-//                SizedBox(height: 10.0,),
-//                Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                    children: <Widget>[
-//                      SizedBox(
-//                        height: 100.0,
-//                        width: 150.0,
-//                        child: RaisedButton(
-//                          textColor: Colors.white,
-//                          color: Colors.lightBlueAccent,
-//                          child: Text(
-//                            'Add Bus'
-//                          ),
-//                          onPressed: () {
-//                            if(_auth.currentUser.email == 'pngodup123@gmail.com'){
-//                              Navigator.push(context, MaterialPageRoute(
-//                                builder: (context) {
-//                                  return AddBusDetail();
-//                                },
-//                              ));
-//                            }
-//                          },
-//
-//                        ),
-//                      ),
-//                      SizedBox(
-//                        height: 100.0,
-//                        width: 150.0,
-//                        child: RaisedButton(
-//                          textColor: Colors.white,
-//                          color: Colors.lightBlueAccent,
-//                          child: Text(
-//                              'Book Ticket'
-//                          ),
-//                          onPressed: () {
-//
-//                          },
-//                        ),
-//                      ),
-//
-//                    ],
-//                ),
-//                SizedBox(height: 10.0,),
-//                Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                  children: <Widget>[
-//                    SizedBox(
-//                      width: 150.0,
-//                      height: 100.0,
-//                      child: RaisedButton(
-//                        textColor: Colors.white,
-//                        color: Colors.lightBlueAccent,
-//                        child: Text(
-//                            'Update Ticket'
-//                        ),
-//                        onPressed: () {
-//                          if(_auth.currentUser.email == 'pngodup123@gmail.com'){
-//                            Navigator.push(context, MaterialPageRoute(
-//                              builder: (context) {
-//                                return UpdateUserProfile();
-//                              },
-//                            ));
-//                          }
-//                        },
-//                      ),
-//                    ),
-//                    SizedBox(
-//                      width: 150.0,
-//                      height: 100.0,
-//                      child: RaisedButton(
-//                        textColor: Colors.white,
-//                        color: Colors.lightBlueAccent,
-//                        child: Text(
-//                            'Bus List'
-//                        ),
-//                        onPressed: () {
-//                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                            return AdminBusList();
-//                          },));
-//                        },
-//                      ),
-//                    ),
-//
-//                  ],
-//                ),
-//              ],
-//            ),
-//          ],
-//        ),
-//      ),
     );
   }
 }

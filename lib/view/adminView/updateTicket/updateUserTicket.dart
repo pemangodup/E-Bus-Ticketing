@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ebusticketing/view/adminView/updateTicket/updateBusDestinationListTile.dart';
+import 'package:ebusticketing/view/adminView/updateTicket/updateUserTicketTile.dart';
 import 'package:flutter/material.dart';
 
 

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebusticketing/view/guestUser/seatSelectionAndReserve.dart';
+import 'package:ebusticketing/view/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:ebusticketing/services/sentiment.dart';
 
 
 
@@ -19,8 +21,9 @@ class TicketDetailListTile extends StatefulWidget {
   final String yatayat;
   final String busType;
   final String ticketPrice;
+  final int response;
 
-  TicketDetailListTile({this.docMainId, this.docId, this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.to, this.from});
+  TicketDetailListTile({this.response, this.docMainId, this.docId, this.date, this.depTime, this.arriveTime, this.yatayat, this.busType, this.ticketPrice, this.to, this.from});
 
   @override
   _TicketDetailListTileState createState() => _TicketDetailListTileState();
@@ -28,9 +31,30 @@ class TicketDetailListTile extends StatefulWidget {
 
 class _TicketDetailListTileState extends State<TicketDetailListTile> {
 
-  String comment, _controller;
+  String comment;
+  String apiResponse="positive";
+  int firebaseResponse, response3 = 0;
+
+  @override
+  void initState() {
+    try {
+      FirebaseFirestore.instance.collection("Comments").doc(
+          "${widget.docMainId}").collection("ListComments").doc(widget.docId).get().then((querySnapshot) {
+        firebaseResponse = querySnapshot.get("response");
+        setState(() {
+          response3 = firebaseResponse;
+        });
+      });
+    }catch(e){
+      print(e);
+    }
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onLongPress: (){
@@ -54,20 +78,58 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
           },
           btnOkText: 'Feedback',
           btnOkOnPress: () {
-            int feedback = 1;
-            if(comment != null){
-              FirebaseFirestore.instance.collection("Comments").doc(widget.docId).collection("ListComments").doc().set({
-                "docMainId": widget.docMainId,
-                "feedback": feedback,
-                "docId": widget.docId,
-                "to": widget.to,
-                "from": widget.from,
-                "date": widget.date,
-                "comment": comment,
-                "departure": widget.depTime,
-              }).then((value) => print('******************** Commented to *********************'));
-              print("I am comment: $comment");
+            //method for sentiment response
+            if(firebaseResponse == null){
+              if(apiResponse=="negative"){
+                FirebaseFirestore.instance.collection("Comments").doc(widget.docMainId).collection("ListComments").doc(widget.docId).set({
+                  "docId": widget.docId,
+                  "response": -1,
+                }).then((value) => print('******************** Commented to *********************'));
+                setState(() {
+                  response3 = -1;
+                });
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return HomePage();
+                }));
+              }else if(apiResponse == "positive"){
+                FirebaseFirestore.instance.collection("Comments").doc(widget.docMainId).collection("ListComments").doc(widget.docId).set({
+                  "docId": widget.docId,
+                  "response": 1,
+                }).then((value) => print('******************** Commented to *********************'));
+                setState(() {
+                  response3 = 1;
+                });
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return HomePage();
+                }));
+              }
+            }else{
+              //int the case where comment on the bus is already available
+              if(apiResponse=="positive"){
+                FirebaseFirestore.instance.collection('Comments').doc(widget.docMainId).collection("ListComments").doc(widget.docId).update({
+                  "docId": widget.docId,
+                  "response": firebaseResponse +1,
+                }).catchError((e){
+                  print("error $e");
+                });
+                setState(() {
+                  response3 = firebaseResponse +1;
+                });
+                Navigator.pop(context);
+              }else if(apiResponse == "negative"){
+                FirebaseFirestore.instance.collection('Comments').doc(widget.docMainId).collection("ListComments").doc(widget.docId).update({
+                  "docId": widget.docId,
+                  "response": firebaseResponse -1,
+                }).catchError((e){
+                  print("error $e");
+                });
+                setState(() {
+                  response3 = firebaseResponse -1;
+                });
+                Navigator.pop(context);
+              }
             }
+
           },
         )..show();
       },
@@ -131,7 +193,7 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   RatingBarIndicator(
-                    rating: 2,
+                    rating: response3.toDouble(),
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
                       color: Colors.amber,
@@ -158,3 +220,4 @@ class _TicketDetailListTileState extends State<TicketDetailListTile> {
     );
   }
 }
+

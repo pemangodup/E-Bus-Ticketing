@@ -42,9 +42,5 @@ class _ListAllState extends State<ListAll> {
         },
       ),
     );
-
-
-
-
   }
 }

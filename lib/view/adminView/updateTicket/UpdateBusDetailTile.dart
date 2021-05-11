@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebusticketing/view/adminView/updateTicket/deleteUserTicket.dart';
 import 'package:ebusticketing/view/adminView/updateTicket/deleteUserTicketTile.dart';
 import 'package:flutter/material.dart';
 
@@ -76,7 +78,13 @@ class UpdateBusDetailTile2 extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                       color: Color(0xFF047cb0),
                       onPressed: () {
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return DeleteUserTicket(
+                            beginningDocumentId: beginningDocumentId,
+                            secondDocumentId: secondDocumentId,
+                          );
+                        }));
+                        print("$beginningDocumentId and $secondDocumentId ----------------------------------------------------");
                       },
                       textColor: Colors.white,
                     ),

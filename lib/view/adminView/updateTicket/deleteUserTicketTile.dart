@@ -1,16 +1,16 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_khalti/flutter_khalti.dart';
 
 
 class UpdateBusDetailTile extends StatelessWidget {
+
+
+
   final String date;
   final String depTime;
-  final String arriveTime;
   final String yatayat;
   final String email;
-  final String ticketPrice;
   final String bookedSeat;
   final String total;
   final String beginningDocumentId;
@@ -18,7 +18,7 @@ class UpdateBusDetailTile extends StatelessWidget {
   final String startDocId;
 
   UpdateBusDetailTile({this.date, this.beginningDocumentId, this.depTime,
-    this.arriveTime, this.total, this.yatayat, this.email, this.ticketPrice, this.bookedSeat, this.secondDocumentId, this.startDocId});
+     this.total, this.yatayat, this.email, this.bookedSeat, this.secondDocumentId, this.startDocId});
 
   @override
   Widget build(BuildContext context) {
@@ -84,28 +84,21 @@ class UpdateBusDetailTile extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                       color: Color(0xFF047cb0),
                       onPressed: () {
-                        showDialog(context: context,
-                            builder: (BuildContext context){
-                              return AlertDialog(
-                                title: Text('Delete?'),
-                                content: Text('Delete or Not?'),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('Delete'),
-                                    onPressed: () {
-                                      _returnBack(context);
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text('Cancel'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              );
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.INFO,
+                          animType: AnimType.TOPSLIDE,
+                          title: 'Delete',
+                          desc: "Continue with the process",
+                          btnOkOnPress: (){
+                            FirebaseFirestore.instance.collection("BusInfo").doc(startDocId).collection("Details").doc(beginningDocumentId).collection("Reserve").doc(secondDocumentId).delete().catchError((e){
+                              print(e);
                             });
-
+                          },
+                          btnCancelOnPress: (){
+                            print("cancel");
+                          },
+                        ).show();
                       },
                       textColor: Colors.white,
                     ),
@@ -128,32 +121,5 @@ class UpdateBusDetailTile extends StatelessWidget {
             ),
           ),
         ));
-  }
-
-  _returnBack(BuildContext context) {
-//    FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
-//      publicKey: "test_public_key_eacadfb91994475d8bebfa577b0bca68",
-//      urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
-//    );
-//
-//    KhaltiProduct product = KhaltiProduct(
-//      id: "test",
-//      amount: 10000,
-//      name: "Hello Product",
-//    );
-//    _flutterKhalti.startPayment(
-//      product: product,
-//      onSuccess: (data) {
-//        FirebaseFirestore.instance.collection("BusInfo").doc(startDocId).collection("Details").doc(beginningDocumentId).collection("Reserve").doc(secondDocumentId).delete();
-//        Navigator.pop(context);
-//      },
-//      onFaliure: (error) {
-//        print("sorry");
-//      },
-//    );
-  }
-
-  _bookFinally() {
-
   }
 }

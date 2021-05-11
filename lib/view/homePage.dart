@@ -38,34 +38,8 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Color(0xFF07538a),
-        title: GestureDetector(
-          onLongPress: (){
-            if(FirebaseAuth.instance.currentUser.email.toString() == "pngodup123@gmail.com")
-            {
-              Navigator.push(context, MaterialPageRoute(builder: (context){
-                return AdminPanel();
-              }));
-            }else{
-              showDialog(context: context,
-                  builder: (BuildContext context){
-                    return AlertDialog(
-                      title: Text('Alert!'),
-                      content: Text('Admin Not Logged In'),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text('Ok'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  });
-            }
-          },
-          child: Text(
-              'eBusTicketing'
-          ),
+        title: Text(
+            'eBusTicketing'
         ),
       ),
       body: child,

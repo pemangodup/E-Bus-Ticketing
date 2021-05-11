@@ -22,7 +22,7 @@ class _UpdateBusDetailState extends State<UpdateBusDetail> {
       appBar: AppBar(
         backgroundColor: Color(0xFF07538a),
         title: Text(
-            'List of ticket Ticket'
+            'List of Ticket'
         ),
         centerTitle: true,
       ),

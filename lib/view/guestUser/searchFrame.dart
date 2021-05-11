@@ -1,3 +1,4 @@
+import 'package:ebusticketing/services/sentiment.dart';
 import 'package:ebusticketing/view/guestUser/locationSearch.dart';
 import 'package:ebusticketing/view/guestUser/ticketTiming.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _SearchFrameState extends State<SearchFrame> {
 
   //variable to store source and destination point
   String source, destination, date;
-
+  int temp;
   //for date picker pop up
   DateTime _date = DateTime.now();
 
@@ -38,6 +39,13 @@ class _SearchFrameState extends State<SearchFrame> {
     }
   }
 
+
+
+  @override
+  void initState() {
+    getWeatherData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -137,7 +145,7 @@ class _SearchFrameState extends State<SearchFrame> {
                             title: 'Alert',
                             desc: 'Field empty.............',
                             btnOkOnPress: () {},
-                          )..show();
+                          ).show();
                         }
                       },
                     ),
@@ -148,19 +156,20 @@ class _SearchFrameState extends State<SearchFrame> {
           ),
         ),
         SizedBox(height: 10.0,),
-        Container(
-          height: 100.0,
-          margin: EdgeInsets.only(left: 10.0, right: 10.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            color: Color(0xFF047cb0),
-          ),
-        ),
         //main search frame ends here
       ],
     );
   }
 
+  void getWeatherData() async{
+    try{
+      Future sentiment =  await Sentiment().sentiment();
+      print(sentiment);
+    }
+    catch(e){
+      print("error: $e");
+    }
+  }
+
 }
-//main.temp
 
